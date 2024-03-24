@@ -14,4 +14,7 @@
         public List<string>? Details { get; set; }
 
     }
+
+
+    
 }

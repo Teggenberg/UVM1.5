@@ -1,10 +1,25 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UVM1._5.Models;
+using System.Diagnostics;
 
 namespace UVM1._5.Controllers
 {
     public class ItemController : Controller
     {
+        public List<string> Brands()
+        {
+            List<string> brands = new List<string>();
+            brands.Add("Fender");
+            brands.Add("Gibson");
+            brands.Add("Yamaha");
+            brands.Add("Martin");
+            brands.Add("Taylor");
+            brands.Add("PRS");
+            brands.Add("G&L");
+
+            return brands;
+        }
         // GET: ItemController
         public ActionResult Index()
         {
@@ -20,6 +35,7 @@ namespace UVM1._5.Controllers
         // GET: ItemController/Create
         public ActionResult Create()
         {
+            ViewBag.brands = Brands();
             return View();
         }
 
