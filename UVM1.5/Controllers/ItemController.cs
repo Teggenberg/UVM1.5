@@ -20,6 +20,8 @@ namespace UVM1._5.Controllers
 
             return brands;
         }
+
+        
         // GET: ItemController
         public ActionResult Index()
         {
@@ -35,6 +37,7 @@ namespace UVM1._5.Controllers
         // GET: ItemController/Create
         public ActionResult Create()
         {
+            ViewBag.locations = DBQuery.GetOptions("Locations");
             ViewBag.brands = Brands();
             return View();
         }

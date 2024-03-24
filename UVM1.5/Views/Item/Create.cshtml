@@ -17,6 +17,21 @@
     }
 
 </datalist>
+
+<datalist id="locationlist">
+
+    @foreach (var loc in @ViewBag.locations)
+    {
+
+        
+        <option value="@loc.Value">@loc.Name</option>
+
+
+    }
+
+</datalist>
+
+
 <h4>Item</h4>
 <hr />
 <div class="row">
@@ -26,12 +41,12 @@
 
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
+                <input asp-for="Location" class="form-control" list="locationlist" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Brand" class="control-label"></label>
-                <input id="brand" list="brandlist" asp-for="Brand" class="form-control" />
+                <input id="brand" type="search" list="brandlist" asp-for="Brand" class="form-control" />
                 <span asp-validation-for="Brand" class="text-danger"></span>
             </div>
             <div class="form-group">
