@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using UVM1._5.Models;
 using System.Diagnostics;
+using System;
+using System.Reflection.Emit;
 
 namespace UVM1._5.Controllers
 {
@@ -21,6 +23,35 @@ namespace UVM1._5.Controllers
             return brands;
         }
 
+        public List<string> Categories()
+        {
+            List<string> cats = new List<string>();
+            cats.Add("Effect Pedal");
+            cats.Add("Solidbody Electric Guitar");
+            cats.Add("Acousitc-Electric Guitar");
+            cats.Add("Effect Processor");
+            cats.Add("Guitar Combo Amplifier");
+            cats.Add("Guitar Head Amplifier");
+            cats.Add("Solid Body Bass");
+            cats.Add("Folk Instrument");
+            cats.Add("Electronic Drum Set");
+            cats.Add("Single Kick Pedal");
+            cats.Add("Double kick Pedal");
+            cats.Add("Cymbal Stand");
+            cats.Add("Acoustic Guitar");
+            cats.Add("Bass Combo Amplifier");
+            cats.Add("Speaker Cabinet");
+            cats.Add("Keyboard");
+            cats.Add("Pa Powered Speaker");
+            cats.Add("Pa Passive Speaker");
+            cats.Add("Hollowbody electric guitars");
+            cats.Add("Extended range electric guitars");
+
+
+            return cats;
+
+        }
+
         
         // GET: ItemController
         public ActionResult Index()
@@ -37,19 +68,41 @@ namespace UVM1._5.Controllers
         // GET: ItemController/Create
         public ActionResult Create()
         {
+            Item item = new Item();
             ViewBag.locations = DBQuery.GetOptions("Locations");
             ViewBag.brands = Brands();
-            return View();
+            return View(item);
         }
 
         // POST: ItemController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(string Brand, string Model)
         {
+
+            string query = $"Provide a product description for {Brand} {Model}.";
+
+            string item = $"{Brand} {Model}";
+
+            OpenAIController controller = new OpenAIController();
+
+            string desc = await controller.GetDescription(query);
+
+            Item test = new Item();
+
+            test.Brand = Brand;
+            test.Model = Model;
+            test.Description = desc;
+            test.Category = await controller.GetCategory(Categories(), item);
+
+           // System.Diagnostics.Debug.WriteLine("Hello Tommy" + controller.UseChatGPT(query) + " TEST !!!!");
+
             try
             {
-                return RedirectToAction(nameof(Index));
+                ViewBag.locations = DBQuery.GetOptions("Locations");
+                ViewBag.brands = Brands();
+                //return RedirectToAction(nameof(Index));
+                return View(test);
             }
             catch
             {
