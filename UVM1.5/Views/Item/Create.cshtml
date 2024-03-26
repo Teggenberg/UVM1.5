@@ -12,8 +12,6 @@
 
         var name = brand;
         <option value="@name"></option>
-
-
     }
 
 </datalist>
@@ -23,11 +21,19 @@
     @foreach (var loc in @ViewBag.locations)
     {
 
-        
         <option value="@loc.Value">@loc.Name</option>
-
-
     }
+
+</datalist>
+
+<datalist id="cat_options">
+    
+    @foreach (var cat in @ViewBag.categories)
+    {
+
+        <option value="@cat"></option>
+    }
+    
 
 </datalist>
 
@@ -41,32 +47,39 @@
 
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" list="locationlist" />
+                <input asp-for="Location" id="location" class="form-control" list="locationlist" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Brand" class="control-label"></label>
-                <input id="brand" type="search" list="brandlist" asp-for="Brand" class="form-control" />
+                <input id="brand" type="search" list="brandlist" asp-for="Brand" class="form-control" disabled="true" />
                 <span asp-validation-for="Brand" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Model" class="control-label"></label>
-                <input id="model" asp-for="Model" class="form-control" />
+                <input id="model" asp-for="Model" class="form-control" disabled="true"/>
                 <span asp-validation-for="Model" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
-                <input id="cat" asp-for="Category" class="form-control" />
+                <input id="cat" asp-for="Category" class="form-control" disabled="true" list="cat_options" />
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Serial" class="control-label"></label>
-                <input id="serial" asp-for="Serial" class="form-control" onblur="parseSerial()" />
+                <input id="serial" asp-for="Serial" class="form-control" onblur="parseSerial()" disabled="true" />
                 <span asp-validation-for="Serial" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Condition" class="control-label"></label>
-                <input asp-for="Condition" class="form-control" />
+                <select asp-for="Condition" class="form-control" list="condition_options" >
+                    <option value="0"></option>
+                    <option value="5">Excellent</option>
+                    <option value="4">Great</option>
+                    <option value="3">Good</option>
+                    <option value="2">Fair</option>
+
+                </select>
                 <span asp-validation-for="Condition" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -79,13 +92,8 @@
                 <input asp-for="Cost" class="form-control" />
                 <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" rows="6"/>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
             
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -94,7 +102,8 @@
     <div class="col-8">
         <div class="row col-12" >
             <div class="col">
-                <textarea rows="6" class="col-12">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea rows="6" class="col-12 form-control">
                     @Model.Description
                 </textarea>
 
@@ -114,6 +123,82 @@
 </div>
 
 <script>
+
+    var loc = document.getElementById("location");
+    var brand = document.getElementById("brand");
+    var model = document.getElementById("model");
+    var cat = document.getElementById("cat");
+    var serial = document.getElementById("serial");
+
+    loc.addEventListener("change", (e) => {
+        brand.disabled = false;
+
+    });
+
+    brand.addEventListener("change", (e) => {
+        if (brand.value != "") {
+            model.disabled = false;
+        }
+        else {
+            model.disabled = true;
+            model.value = "";
+        }
+    });
+
+    model.addEventListener("change", (e) => {
+        if (model.value != "") {
+            cat.disabled = false;
+
+            var brnd = brand.value;
+            var mod = model.value;
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Generate")",
+                traditional: true,
+                dataType: "json",
+                data: { 
+                    brand: brnd,
+                    model: mod
+                },
+                success: function (result) {
+                    console.log(result);
+                    alert("Ajax was here");
+                },
+                error: function (req, status, err) {
+                    console.log(status);
+                }
+
+
+            });
+
+
+
+
+
+
+
+
+        }
+        else {
+            cat.disabled = true;
+            cat.value = "";
+        }
+    });
+
+    cat.addEventListener("change", (e) => {
+        if (cat.value != "") {
+            serial.disabled = false;
+        }
+        else {
+            serial.disabled = true;
+            serial.value = "";
+        }
+    });
+
+
+
+
     function parseSerial() {
         var brand = document.getElementById('brand');
         var serial = document.getElementById('serial');
@@ -142,6 +227,8 @@
             // code block
         }
     }
+
+    
 
     function isLetter(s) {
         return s.match(/[a-z]/i);

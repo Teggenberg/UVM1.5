@@ -4,6 +4,7 @@ using UVM1._5.Models;
 using System.Diagnostics;
 using System;
 using System.Reflection.Emit;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace UVM1._5.Controllers
 {
@@ -69,6 +70,7 @@ namespace UVM1._5.Controllers
         public ActionResult Create()
         {
             Item item = new Item();
+            ViewBag.categories = Categories();
             ViewBag.locations = DBQuery.GetOptions("Locations");
             ViewBag.brands = Brands();
             return View(item);
@@ -99,6 +101,7 @@ namespace UVM1._5.Controllers
 
             try
             {
+                ViewBag.categories = Categories();
                 ViewBag.locations = DBQuery.GetOptions("Locations");
                 ViewBag.brands = Brands();
                 //return RedirectToAction(nameof(Index));
@@ -108,6 +111,23 @@ namespace UVM1._5.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Generate(string brand, string model, Item item)
+        {
+            Item ai_item = item;
+            ViewBag.categories = Categories();
+            ViewBag.locations = DBQuery.GetOptions("Locations");
+            ViewBag.brands = Brands();
+            //item.Model = "Bone Crusher";
+            System.Diagnostics.Debug.WriteLine(brand + model);
+
+            OpenAIController ai = new OpenAIController();
+            ai_item.Category = await ai.GetCategory(Categories(), $"{brand} {model}");
+            ai_item.Description = await ai.GetDescription($"{brand} {model}");
+            return View( "Create", ai_item);
+
         }
 
         // GET: ItemController/Edit/5
