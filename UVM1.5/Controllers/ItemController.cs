@@ -113,20 +113,33 @@ namespace UVM1._5.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Generate(string brand, string model, Item item)
+        [HttpGet]
+        public async Task<JsonResult> GenerateDesc(string yy, string brnd, string mod)
         {
-            Item ai_item = item;
-            ViewBag.categories = Categories();
-            ViewBag.locations = DBQuery.GetOptions("Locations");
-            ViewBag.brands = Brands();
-            //item.Model = "Bone Crusher";
-            System.Diagnostics.Debug.WriteLine(brand + model);
 
             OpenAIController ai = new OpenAIController();
-            ai_item.Category = await ai.GetCategory(Categories(), $"{brand} {model}");
-            ai_item.Description = await ai.GetDescription($"{brand} {model}");
-            return View( "Create", ai_item);
+
+            return new JsonResult(Ok(await ai.GetDescription($"{yy} {brnd} {mod}")));
+
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetCat(string brnd, string mod)
+        {
+
+            OpenAIController ai = new OpenAIController();
+
+            return new JsonResult(Ok(await ai.GetCategory(Categories(),$"{brnd} {mod}")));
+
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetYear(string brnd, string mod, string ser)
+        {
+
+            OpenAIController ai = new OpenAIController();
+
+            return new JsonResult(Ok(await ai.GetYear(brnd, ser)));
 
         }
 

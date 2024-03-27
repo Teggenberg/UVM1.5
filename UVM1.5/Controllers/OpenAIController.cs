@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OpenAI_API;
 using OpenAI_API.Completions;
 using UVM1._5.Models;
@@ -50,7 +51,7 @@ namespace UVM1._5.Controllers
 
             var chat = openai.Chat.CreateConversation();
 
-            chat.AppendSystemMessage("You are assisting to generate a short product description to advertise musical instruments for sale. You will be provided a specific model, and need to genreate a product summary of around 600 characters.  ");
+            chat.AppendSystemMessage("You are assisting to generate a short product description to advertise pre-owned musical instruments for sale. You will be provided a specific model, and need to genreate a product summary of around 600 characters.");
             chat.AppendUserInput(item);
 
             
@@ -75,6 +76,32 @@ namespace UVM1._5.Controllers
                 chat.AppendSystemMessage($", {categories[i]}");
             }
             chat.AppendUserInput(item);
+
+            var response = await chat.GetResponseFromChatbotAsync();
+
+            return response;
+
+        }
+
+        public async Task<string> GetYear(string brand, string serial)
+        {
+            OpenAIAPI openai = new OpenAIAPI(_key);
+
+            var chat = openai.Chat.CreateConversation();
+
+            if(brand == "Gibson")
+            {
+                chat.AppendSystemMessage("Using the following webpage as a reference, http://guitarhq.com/gibson.html#serial  . Please review the entire page as many serial numbers are ambiguous and there may be multiple possibilities. Your response format should only be an exact year such as '1997' or a decade such as '2000s'.");
+                chat.AppendUserInput($"Serial Number: {serial}");
+                return await chat.GetResponseFromChatbotAsync();
+
+                
+            }
+
+            chat.AppendSystemMessage("You will be provided a musical instrument followed by the serial number. Please do your best to determine the year the instrument was manufactured with the information provided. Your response format should only be an exact year such as '1997' or list of possible years.");
+            chat.AppendUserInput(brand);
+
+
 
             var response = await chat.GetResponseFromChatbotAsync();
 

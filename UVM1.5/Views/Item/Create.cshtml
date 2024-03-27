@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+
 
 <datalist id="brandlist">
 
@@ -38,88 +38,133 @@
 </datalist>
 
 
-<h4>Item</h4>
+<h4>Used Intake</h4>
 <hr />
-<div class="row d-inline-flex col-12">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<div class="">
+    <div >
+        <form asp-action="Create" class="row d-inline-flex col-12">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-lg-4">
 
-            <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" id="location" class="form-control" list="locationlist" />
-                <span asp-validation-for="Location" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Brand" class="control-label"></label>
-                <input id="brand" type="search" list="brandlist" asp-for="Brand" class="form-control" disabled="true" />
-                <span asp-validation-for="Brand" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Model" class="control-label"></label>
-                <input id="model" asp-for="Model" class="form-control" disabled="true"/>
-                <span asp-validation-for="Model" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input id="cat" asp-for="Category" class="form-control" disabled="true" list="cat_options" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Serial" class="control-label"></label>
-                <input id="serial" asp-for="Serial" class="form-control" onblur="parseSerial()" disabled="true" />
-                <span asp-validation-for="Serial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Condition" class="control-label"></label>
-                <select asp-for="Condition" class="form-control" list="condition_options" >
-                    <option value="0"></option>
-                    <option value="5">Excellent</option>
-                    <option value="4">Great</option>
-                    <option value="3">Good</option>
-                    <option value="2">Fair</option>
+                <div class="form-group">
+                    <label asp-for="Location" class="control-label form-label my-0"></label>
+                    <input asp-for="Location" id="location" class="form-control" list="locationlist" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Brand" class="control-label form-label my-0"></label>
+                    <input id="brand" type="search" list="brandlist" asp-for="Brand" class="form-control" disabled="true" />
+                    <span asp-validation-for="Brand" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model" class="control-label form-label my-0"></label>
+                    <input id="model" asp-for="Model" class="form-control" disabled="true" />
+                    <span asp-validation-for="Model" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Color" class="control-label form-label my-0"></label>
+                    <input id="color" asp-for="Color" class="form-control" disabled="true" />
+                    <span asp-validation-for="Color" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Year" class="control-label form-label my-0"></label>
+                    <input id="year" asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Category" class="control-label form-label my-0"></label>
+                    <input id="cat" asp-for="Category" class="form-control" disabled="true" list="cat_options" />
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Serial" class="control-label form-label my-0"></label>
+                    <input id="serial" asp-for="Serial" class="form-control" onblur="parseSerial()" />
+                    <span asp-validation-for="Serial" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Condition" class="control-label form-label my-0"></label>
+                    <select asp-for="Condition" class="form-control" list="condition_options">
+                        <option value="0"></option>
+                        <option value="5">Excellent</option>
+                        <option value="4">Great</option>
+                        <option value="3">Good</option>
+                        <option value="2">Fair</option>
 
-                </select>
-                <span asp-validation-for="Condition" class="text-danger"></span>
+                    </select>
+                    <span asp-validation-for="Condition" class="text-danger"></span>
+                </div>
+                <div class="d-inline-flex justify-content-between">
+
+                    <div class="form-group col-4">
+                        <label asp-for="Retail" class="control-label form-label my-0"></label>
+                        <div class="d-inline-flex">
+                            <input asp-for="Retail" id="retail" class="form-control text-end" type="number" /><div class="py-2">.99</div>
+                        </div>
+                        <span asp-validation-for="Retail" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-4">
+                        <label asp-for="Cost" class="control-label form-label my-0"></label>
+                        <input asp-for="Cost" type ="number" id="cost" class="form-control text-end" />
+                        <span asp-validation-for="Cost" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-3">
+                        <label class="control-label form-label my-0">GM</label>
+                        <div class="d-inline-flex">
+                            <input id="gm" class="form-control text-end" type="number" /><div class="py-2">%</div>
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+
             </div>
-            <div class="form-group">
-                <label asp-for="Retail" class="control-label"></label>
-                <input asp-for="Retail" class="form-control" />
-                <span asp-validation-for="Retail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cost" class="control-label"></label>
-                <input asp-for="Cost" class="form-control" />
-                <span asp-validation-for="Cost" class="text-danger"></span>
+
+            <div class="col-lg-8">
+                
+
+                    <div class="form-group">
+                        <label class="control-label form-label my-0">Listing Title Preview:</label>
+                        <input id="title" class="form-control" />
+
+                    </div>
+
+                    <div class="col">
+                        <label asp-for="Description" class="control-label form-label my-2"></label>
+                        <textarea id="desc" rows="6" class="col-12 form-control">
+                            @Model.Description
+                        </textarea>
+
+                    </div>
+
+                    <div>
+                        <label asp-for="Details" class="control-label form-label my-2"></label>
+                        <textarea id="details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex:   upgraded tuners, buckle rash, refinished"></textarea>
+                        <label class="text-center form-label my-2">Details Preview:</label>
+                        <p id="details_render">
+
+                        </p>
+
+                    </div>
+
+                
+
+
             </div>
             
-            <div class="form-group mt-2">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class=" col-md-4 mt-4">
+
+                <div class="form-group mt-2">
+                    <input type="submit" value="Create Listing" class="btn btn-primary col-12" />
+                </div>
+
             </div>
+            
         </form>
         
     </div>
-    <div class="col-8">
-        <div class="row col-12" >
-            <div class="col">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea rows="6" class="col-12 form-control">
-                    @Model.Description
-                </textarea>
-
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input id="cat" asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
-            
-
-        </div>
-        
-
-    </div>
+    
 </div>
 
 <script>
@@ -129,6 +174,12 @@
     var model = document.getElementById("model");
     var cat = document.getElementById("cat");
     var serial = document.getElementById("serial");
+    var desc = document.getElementById("desc");
+    var color = document.getElementById("color");
+    var year = document.getElementById("year");
+    var details = document.getElementById("details");
+    var det_rend = document.getElementById("details_render");
+    var title = document.getElementById("title");
 
     loc.addEventListener("change", (e) => {
         brand.disabled = false;
@@ -138,6 +189,7 @@
     brand.addEventListener("change", (e) => {
         if (brand.value != "") {
             model.disabled = false;
+            title.value = year.value + ' ' + brand.value + ' ' + model.value + ' ' + color.value + ' ' + cat.value;
         }
         else {
             model.disabled = true;
@@ -148,22 +200,25 @@
     model.addEventListener("change", (e) => {
         if (model.value != "") {
             cat.disabled = false;
+            color.disabled = false;
+            title.value = year.value + ' ' + brand.value + ' ' + model.value + ' ' + color.value + ' ' + cat.value;
 
             var brnd = brand.value;
             var mod = model.value;
 
             $.ajax({
-                type: "POST",
-                url: "@Url.Action("Generate")",
-                traditional: true,
+                type: "GET",
+                url: "@Url.Action("GetCat")",
                 dataType: "json",
-                data: { 
-                    brand: brnd,
-                    model: mod
+                data: {
+                    brnd: brnd,
+                    mod: mod
                 },
-                success: function (result) {
-                    console.log(result);
-                    alert("Ajax was here");
+                success: function (response) {
+                    //alert("Genrating Description");
+                    console.log(response);
+                    cat.value = response.value
+
                 },
                 error: function (req, status, err) {
                     console.log(status);
@@ -172,23 +227,45 @@
 
             });
 
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GenerateDesc")",
+                dataType: "json",
+                data: {
+                    brnd: brnd,
+                    mod: mod
+                },
+                success: function (response) {
+                    //alert("Genrating Description");
+                    console.log(response);
+                    desc.value = response.value
+                    
+                },
+                error: function (req, status, err) {
+                    console.log(status);
+                }
 
 
-
-
-
-
+            });
 
         }
         else {
             cat.disabled = true;
+            color.disabled = true;
             cat.value = "";
+            color.value = "";
         }
     });
+
+    
 
     cat.addEventListener("change", (e) => {
         if (cat.value != "") {
             serial.disabled = false;
+            title.value = year.value + ' ' + brand.value + ' ' + model.value + ' ' + color.value + ' ' + cat.value;
+            
+
+
         }
         else {
             serial.disabled = true;
@@ -196,6 +273,66 @@
         }
     });
 
+    year.addEventListener("change", (e) => {
+
+        var brnd = brand.value;
+        var mod = model.value;
+        var yy = year.value;
+        title.value = year.value + ' ' + brand.value + ' ' + model.value + ' ' + color.value + ' ' + cat.value;
+
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GenerateDesc")",
+            dataType: "json",
+            data: {
+                brnd: brnd,
+                mod: mod,
+                yy: yy
+            },
+            success: function (response) {
+                //alert("Genrating Description");
+                console.log(response);
+                desc.value = response.value
+
+            },
+            error: function (req, status, err) {
+                console.log(status);
+            }
+
+
+        });
+
+    });
+
+    document.getElementById("cost").addEventListener("change", (e) => {
+        var gm = document.getElementById("gm");
+        var cost = document.getElementById("cost");
+        var retail = document.getElementById("retail");
+        if (retail.value > 0) {
+            var margin = (1 - (cost.value / retail.value )) * 100;
+            gm.value = margin.toFixed(2);
+        }
+        
+    })
+
+    details.addEventListener("input", (e) => {
+        //det_rend.innerText = formatDetails(details.innerText);
+        
+        var det = details.value;
+        det_rend.innerText = formatDetails(det);
+        console.log(det);
+    });
+
+    function formatDetails(text) {
+        var det = '';
+        var detailsArr = text.split(',');
+        console.log(detailsArr);
+        for (let i = 0; i < detailsArr.length; i++) {
+            
+            det = det + '- ' + detailsArr[i] + '\n';
+        }
+        return det;
+    }
 
 
 
