@@ -51,7 +51,7 @@ namespace UVM1._5.Controllers
 
             var chat = openai.Chat.CreateConversation();
 
-            chat.AppendSystemMessage("You are assisting to generate a short product description to advertise musical instruments for sale. You will be provided a specific model, and need to genreate a product summary of around 600 characters.");
+            chat.AppendSystemMessage("You are assisting to generate a short product description to advertise pre-owned musical instruments for sale. You will be provided a specific model, and need to genreate a product summary of around 600 characters.");
             chat.AppendUserInput(item);
 
             

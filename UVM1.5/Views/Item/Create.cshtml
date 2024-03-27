@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+
 
 <datalist id="brandlist">
 
@@ -38,7 +38,7 @@
 </datalist>
 
 
-<h4>Item</h4>
+<h4>Used Intake</h4>
 <hr />
 <div class="row d-inline-flex col-12">
     <div class="col-md-4">
@@ -111,6 +111,13 @@
     </div>
     <div class="col-8">
         <div class="row col-12" >
+
+            <div class="form-group">
+                <label class="control-label">Listing Title</label>
+                <input id="title" class="form-control" />
+                
+            </div>
+
             <div class="col">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea id="desc" rows="6" class="col-12 form-control">
@@ -119,12 +126,17 @@
 
             </div>
 
-            <textarea id="details" class="col-12 form-control">
+            <div>
+                <label asp-for="Details" class="control-label"></label>
+                <textarea id="details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex. upgraded tuners, buckle rash, refinished"></textarea>
+                <label class="text-center py-3">Details Preview:</label>
+                <p id="details_render">
 
-            </textarea>
-            <p id="detail_render">
+                </p>
 
-            </p>
+            </div>
+            
+            
             
            
 
@@ -146,6 +158,7 @@
     var year = document.getElementById("year");
     var details = document.getElementById("details");
     var det_rend = document.getElementById("details_render");
+    var title = document.getElementById("title");
 
     loc.addEventListener("change", (e) => {
         brand.disabled = false;
@@ -155,6 +168,7 @@
     brand.addEventListener("change", (e) => {
         if (brand.value != "") {
             model.disabled = false;
+            title.value = brand.value;
         }
         else {
             model.disabled = true;
@@ -166,6 +180,7 @@
         if (model.value != "") {
             cat.disabled = false;
             color.disabled = false;
+            title.value = brand.value + model.value;
 
             var brnd = brand.value;
             var mod = model.value;
@@ -221,20 +236,12 @@
         }
     });
 
-    cat.addEventListener("change", (e) => {
-        if (cat.value != "") {
-            serial.disabled = false;
-        }
-        else {
-            //serial.disabled = true;
-            //serial.value = "";
-        }
-    });
+    
 
     cat.addEventListener("change", (e) => {
         if (cat.value != "") {
             serial.disabled = false;
-
+            title.value = brand.value + model.value + cat.value;
             
 
 
@@ -250,6 +257,7 @@
         var brnd = brand.value;
         var mod = model.value;
         var yy = year.value;
+        title.value = year.value + brand.value + model.value + cat.value;
 
         $.ajax({
             type: "GET",
@@ -275,15 +283,23 @@
 
     });
 
-    details.addEventListener("change", (e) => {
-        det_rend.innerText = formatDetails(details.innerText);
+    details.addEventListener("input", (e) => {
+        //det_rend.innerText = formatDetails(details.innerText);
+        
+        var det = details.value;
+        det_rend.innerText = formatDetails(det);
+        console.log(det);
     });
 
     function formatDetails(text) {
-        for (let i = 0; i < text.length; i++) {
-            var detailsArr = text.split(',');
-            detailsArr.foreach((e) => e = e + '\n');
+        var det = '';
+        var detailsArr = text.split(',');
+        console.log(detailsArr);
+        for (let i = 0; i < detailsArr.length; i++) {
+            
+            det = det + '- ' + detailsArr[i] + '\n';
         }
+        return det;
     }
 
 

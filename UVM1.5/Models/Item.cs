@@ -14,6 +14,7 @@
         public float?  Retail {  get; set; }
         public float? Cost { get; set; }
         public string? Description { get; set; }
+       
         public List<string>? Details { get; set; }
 
     }
