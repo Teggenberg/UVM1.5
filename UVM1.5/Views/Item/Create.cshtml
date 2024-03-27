@@ -311,6 +311,7 @@
         if (retail.value > 0) {
             var margin = (1 - (cost.value / retail.value )) * 100;
             gm.value = margin.toFixed(2);
+            console.log(gm);
         }
         
     })
@@ -377,3 +378,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }*@
+
