@@ -80,7 +80,7 @@ namespace UVM1._5.Controllers
         // POST: ItemController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("Location,Brand.Name,Model,Color,Year,Category.Name,Serial,Condition.Name,Retail,Cost,Description,Details")] Item item)
+        public async Task<ActionResult> Create([Bind("Location,Brand,Model,Color,Year,Category,Serial,Condition,Retail,Cost,Description,Details")] Item item)
         {
 
            

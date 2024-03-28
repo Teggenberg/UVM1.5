@@ -52,9 +52,9 @@
                     <span asp-validation-for="Location" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Brand" class="control-label form-label my-0"></label>
-                    <input id="brand" type="search" list="brandlist" asp-for="Brand" class="form-control" disabled="true" />
-                    <span asp-validation-for="Brand" class="text-danger"></span>
+                    <label asp-for="Brand.Name" class="control-label form-label my-0"></label>
+                    <input id="brand" type="search" list="brandlist" asp-for="Brand.Name" class="form-control" disabled="true" />
+                    <span asp-validation-for="Brand.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Model" class="control-label form-label my-0"></label>
@@ -72,9 +72,9 @@
                     <span asp-validation-for="Year" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Category" class="control-label form-label my-0"></label>
-                    <input id="cat" asp-for="Category" class="form-control" disabled="true" list="cat_options" />
-                    <span asp-validation-for="Category" class="text-danger"></span>
+                    <label asp-for="Category.Name" class="control-label form-label my-0"></label>
+                    <input id="cat" asp-for="Category.Name" class="form-control" disabled="true" list="cat_options" />
+                    <span asp-validation-for="Category.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Serial" class="control-label form-label my-0"></label>
@@ -82,8 +82,8 @@
                     <span asp-validation-for="Serial" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Condition" class="control-label form-label my-0"></label>
-                    <select asp-for="Condition" class="form-control" list="condition_options">
+                    <label asp-for="Condition.Value" class="control-label form-label my-0"></label>
+                    <select asp-for="Condition.Value" class="form-control" list="condition_options">
                         <option value="0"></option>
                         <option value="5">Excellent</option>
                         <option value="4">Great</option>
@@ -91,7 +91,7 @@
                         <option value="2">Fair</option>
 
                     </select>
-                    <span asp-validation-for="Condition" class="text-danger"></span>
+                    <span asp-validation-for="Condition.Value" class="text-danger"></span>
                 </div>
                 <div class="d-inline-flex justify-content-between">
 
@@ -132,7 +132,7 @@
 
                     <div class="col">
                         <label asp-for="Description" class="control-label form-label my-2"></label>
-                        <textarea id="desc" rows="6" class="col-12 form-control">
+                        <textarea id="desc" asp-for="Description" rows="6" class="col-12 form-control">
                             @Model.Description
                         </textarea>
 
@@ -140,7 +140,7 @@
 
                     <div>
                         <label asp-for="Details" class="control-label form-label my-2"></label>
-                        <textarea id="details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex:   upgraded tuners, buckle rash, refinished"></textarea>
+                        <textarea id="details" asp-for="Details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex:   upgraded tuners, buckle rash, refinished"></textarea>
                         <label class="text-center form-label my-2">Details Preview:</label>
                         <p id="details_render">
 
