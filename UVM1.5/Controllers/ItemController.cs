@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System;
 using System.Reflection.Emit;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.CodeAnalysis;
 
 namespace UVM1._5.Controllers
 {
@@ -79,33 +80,19 @@ namespace UVM1._5.Controllers
         // POST: ItemController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(string Brand, string Model)
+        public async Task<ActionResult> Create([Bind("Location,Brand.Name,Model,Color,Year,Category.Name,Serial,Condition.Name,Retail,Cost,Description,Details")] Item item)
         {
 
-            string query = $"Provide a product description for {Brand} {Model}.";
+           
 
-            string item = $"{Brand} {Model}";
-
-            OpenAIController controller = new OpenAIController();
-
-            string desc = await controller.GetDescription(query);
-
-            Item test = new Item();
-
-            test.Brand = Brand;
-            test.Model = Model;
-            test.Description = desc;
-            test.Category = await controller.GetCategory(Categories(), item);
-
-           // System.Diagnostics.Debug.WriteLine("Hello Tommy" + controller.UseChatGPT(query) + " TEST !!!!");
-
+           
             try
             {
                 ViewBag.categories = Categories();
                 ViewBag.locations = DBQuery.GetOptions("Locations");
                 ViewBag.brands = Brands();
                 //return RedirectToAction(nameof(Index));
-                return View(test);
+                return View(item);
             }
             catch
             {

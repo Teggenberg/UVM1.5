@@ -17,10 +17,10 @@ namespace UVM1._5.Controllers
             return connString;
         }
 
-        public static List<MenuOption> GetOptions(string table)
+        public static List<Pair> GetOptions(string table)
         {
             // new list that will be retunred for drop down menu
-            List<MenuOption> list = new();
+            List<Pair> list = new();
 
             // query table for values to populate list using column and table parameters
             SqlConnection sqlconn = new(GetConnectionString());
@@ -33,7 +33,7 @@ namespace UVM1._5.Controllers
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 // add value to list
-                MenuOption option = new()
+                Pair option = new()
                 {
                     Value = Convert.ToInt32(dt.Rows[i][0]),
                     Name = dt.Rows[i][1].ToString(),
@@ -44,6 +44,24 @@ namespace UVM1._5.Controllers
             }
             sqlconn.Close();
             return list;
+        }
+
+        //insert into any table, and return id of new row
+        public static int Insert(string insertQuery)
+        {
+            //var to store new id upon inserted row
+            int newId;
+
+            //open db connection and run passed in query
+            SqlConnection sqlconn = new(GetConnectionString());
+            SqlCommand sqlquery = new(insertQuery, sqlconn);
+            sqlconn.Open();
+
+            //execute query statement, return new id
+            newId = Convert.ToInt32(sqlquery.ExecuteScalar());
+            System.Diagnostics.Debug.WriteLine("New ID : " + newId);
+            sqlconn.Close();
+            return newId;
         }
 
 
