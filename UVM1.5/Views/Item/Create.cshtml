@@ -41,8 +41,8 @@
 <h4>Used Intake</h4>
 <hr />
 <div class="">
-    <div >
-        <form asp-action="Create" class="row d-inline-flex col-12">
+    <div>
+        <form asp-action="createItem" class="row d-inline-flex col-12" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="col-lg-4">
 
@@ -53,7 +53,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Brand.Name" class="control-label form-label my-0"></label>
-                    <input id="brand" type="search" list="brandlist" asp-for="Brand.Name" class="form-control" disabled="true" />
+                    <input id="brand" name="b" type="search" list="brandlist" asp-for="Brand.Name" class="form-control" disabled="true" />
                     <span asp-validation-for="Brand.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -73,7 +73,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Category.Name" class="control-label form-label my-0"></label>
-                    <input id="cat" asp-for="Category.Name" class="form-control" disabled="true" list="cat_options" />
+                    <input id="cat" name="c" asp-for="Category.Name" class="form-control" disabled="true" list="cat_options" />
                     <span asp-validation-for="Category.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -132,7 +132,7 @@
 
                     <div class="col">
                         <label asp-for="Description" class="control-label form-label my-2"></label>
-                        <textarea id="desc" asp-for="Description" rows="6" class="col-12 form-control">
+                        <textarea id="desc" asp-for="Description" rows="6" class="col-12 form-control" name="dsc" >
                             @Model.Description
                         </textarea>
 
@@ -140,7 +140,7 @@
 
                     <div>
                         <label asp-for="Details" class="control-label form-label my-2"></label>
-                        <textarea id="details" asp-for="Details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex:   upgraded tuners, buckle rash, refinished"></textarea>
+                        <textarea id="details" name="det" asp-for="Details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex:   upgraded tuners, buckle rash, refinished"></textarea>
                         <label class="text-center form-label my-2">Details Preview:</label>
                         <p id="details_render">
 
@@ -156,8 +156,11 @@
             <div class=" col-md-4 mt-4">
 
                 <div class="form-group mt-2">
-                    <input type="submit" value="Create Listing" class="btn btn-primary col-12" />
+                    <input type="submit" value="Create Listing" class="btn btn-primary col-12"  />
                 </div>
+                <button onclick="sendForm()">
+                    Create Item
+                </button>
 
             </div>
             
@@ -370,6 +373,16 @@
 
     function isLetter(s) {
         return s.match(/[a-z]/i);
+    }
+
+    function sendForm() {
+
+        var b = brand.value;
+        var c = cat.value;
+        var dsc = desc.innerText;
+        var det = details.innerText;
+
+        
     }
 </script>
 

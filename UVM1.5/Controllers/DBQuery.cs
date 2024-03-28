@@ -17,7 +17,7 @@ namespace UVM1._5.Controllers
             return connString;
         }
 
-        public static List<Pair> GetOptions(string table)
+        public static List<Pair> GetOptions(string table, string order = "")
         {
             // new list that will be retunred for drop down menu
             List<Pair> list = new();
@@ -25,6 +25,10 @@ namespace UVM1._5.Controllers
             // query table for values to populate list using column and table parameters
             SqlConnection sqlconn = new(GetConnectionString());
             string sqlquery = $"select * from {table}";
+            if(order != "")
+            {
+                sqlquery += $"\nOrder by {order};";
+            }
             SqlCommand sqlcomm = new(sqlquery, sqlconn);
             sqlconn.Open();
             SqlDataAdapter adapter = new(sqlcomm);

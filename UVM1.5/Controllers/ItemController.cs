@@ -6,6 +6,7 @@ using System;
 using System.Reflection.Emit;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.CodeAnalysis;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace UVM1._5.Controllers
 {
@@ -71,28 +72,43 @@ namespace UVM1._5.Controllers
         public ActionResult Create()
         {
             Item item = new Item();
-            ViewBag.categories = Categories();
+            ViewBag.categories = DBQuery.GetOptions("Category");
             ViewBag.locations = DBQuery.GetOptions("Locations");
-            ViewBag.brands = Brands();
+            ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
             return View(item);
         }
 
         // POST: ItemController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("Location,Brand,Model,Color,Year,Category,Serial,Condition,Retail,Cost,Description,Details")] Item item)
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateItem(string b, string c, string dsc, string det, 
+            [Bind("Location,Model,Color,Year,Serial,Condition,Retail,Cost")] Item item)
         {
 
-           
+            item.Brand = new Pair(b);
+            item.Category = new Pair(c);
+            item.Description = dsc;
+            item.Details = det;
 
-           
+            List<Pair> brands = DBQuery.GetOptions("Brands");
+
+            int? brandVal = CheckName(item.Brand.Name, brands);
+
+            if(brandVal != -1)
+            {
+                item.Brand.Value = brandVal;
+            }
+
+
+
+
             try
             {
-                ViewBag.categories = Categories();
+                ViewBag.categories = DBQuery.GetOptions("Category");
                 ViewBag.locations = DBQuery.GetOptions("Locations");
-                ViewBag.brands = Brands();
-                //return RedirectToAction(nameof(Index));
-                return View(item);
+                ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
+                System.Diagnostics.Debug.WriteLine(b + det + "Hello Timmy");
+                return View("../Home/index");
             }
             catch
             {
@@ -171,5 +187,20 @@ namespace UVM1._5.Controllers
                 return View();
             }
         }
+
+        public int? CheckName(string name, List<Pair> list)
+        {
+            foreach(var item in list)
+            {
+                if(name == item.Name)
+                {
+                    return item.Value!;
+                }
+            }
+
+            return -1;
+
+        }
+        
     }
 }
