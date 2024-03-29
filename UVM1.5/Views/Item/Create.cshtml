@@ -52,7 +52,7 @@
                     <span asp-validation-for="Location" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Brand.Name" class="control-label form-label my-0"></label>
+                    <label asp-for="Brand" class="control-label form-label my-0"></label>
                     <input id="brand" name="b" type="search" list="brandlist" asp-for="Brand.Name" class="form-control" disabled="true" />
                     <span asp-validation-for="Brand.Name" class="text-danger"></span>
                 </div>
@@ -72,7 +72,7 @@
                     <span asp-validation-for="Year" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Category.Name" class="control-label form-label my-0"></label>
+                    <label asp-for="Category" class="control-label form-label my-0"></label>
                     <input id="cat" name="c" asp-for="Category.Name" class="form-control" disabled="true" list="cat_options" />
                     <span asp-validation-for="Category.Name" class="text-danger"></span>
                 </div>
@@ -82,7 +82,7 @@
                     <span asp-validation-for="Serial" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Condition.Value" class="control-label form-label my-0"></label>
+                    <label asp-for="Condition" class="control-label form-label my-0"></label>
                     <select asp-for="Condition.Value" class="form-control" list="condition_options">
                         <option value="0"></option>
                         <option value="5">Excellent</option>
@@ -110,7 +110,7 @@
                     <div class="form-group col-3">
                         <label class="control-label form-label my-0">GM</label>
                         <div class="d-inline-flex">
-                            <input id="gm" class="form-control text-end" type="number" /><div class="py-2">%</div>
+                            <input id="gm" class="form-control text-end" readonly="readonly" /><div class="py-2">%</div>
                         </div>
 
                     </div>
@@ -158,9 +158,6 @@
                 <div class="form-group mt-2">
                     <input type="submit" value="Create Listing" class="btn btn-primary col-12"  />
                 </div>
-                <button onclick="sendForm()">
-                    Create Item
-                </button>
 
             </div>
             

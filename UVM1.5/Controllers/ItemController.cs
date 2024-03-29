@@ -91,8 +91,10 @@ namespace UVM1._5.Controllers
             item.Details = det;
 
             List<Pair> brands = DBQuery.GetOptions("Brands");
+            List<Pair> cats = DBQuery.GetOptions("Category");
 
             int? brandVal = CheckName(item.Brand.Name, brands);
+            item.Category.Value = CheckName(item.Category.Name, cats);
 
             if(brandVal != -1)
             {
@@ -100,7 +102,7 @@ namespace UVM1._5.Controllers
             }
             else
             {
-                item.Brand.Value = DBQuery.Insert($"instert into Brands (Brand_Name) Values ('{b}');");
+                item.Brand.Value = DBQuery.Insert($"insert into Brands (Brand_Name) Values ('{b}');");
             }
             
 
