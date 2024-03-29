@@ -11,7 +11,7 @@
     @foreach(var brand in @ViewBag.brands){
 
         var name = brand;
-        <option value="@name"></option>
+        <option value="@name.Name"></option>
     }
 
 </datalist>
@@ -31,7 +31,7 @@
     @foreach (var cat in @ViewBag.categories)
     {
 
-        <option value="@cat"></option>
+        <option value="@cat.Name"></option>
     }
     
 

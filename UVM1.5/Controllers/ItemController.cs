@@ -98,7 +98,11 @@ namespace UVM1._5.Controllers
             {
                 item.Brand.Value = brandVal;
             }
-
+            else
+            {
+                item.Brand.Value = DBQuery.Insert($"instert into Brands (Brand_Name) Values ('{b}');");
+            }
+            
 
 
 
