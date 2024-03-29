@@ -69,8 +69,8 @@ namespace UVM1._5.Controllers
 
             var chat = openai.Chat.CreateConversation();
 
-            chat.AppendSystemMessage("Using only one of the categories in the following list, please tell me which categpry the provided item falls best into. Please respond with Only a category selection included in the following list.");
-            chat.AppendSystemMessage($"The Listcontains the following: {categories[0]}");
+            chat.AppendSystemMessage("Using only one of the categories in the following list, please tell me which categpry the provided item falls best into. Please respond with Only a category selection included in the following list and use the exact wording that is provided.");
+            chat.AppendSystemMessage($"The List contains the following: {categories[0]}");
             for (int i = 1; i <categories.Count(); i++)       
             {
                 chat.AppendSystemMessage($", {categories[i]}");

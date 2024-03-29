@@ -110,14 +110,16 @@ namespace UVM1._5.Controllers
 
             try
             {
-                ViewBag.categories = DBQuery.GetOptions("Category");
-                ViewBag.locations = DBQuery.GetOptions("Locations");
-                ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
-                System.Diagnostics.Debug.WriteLine(b + det + "Hello Timmy");
+                AddItem(item);
+                
                 return View("../Home/index");
             }
             catch
             {
+                ViewBag.categories = DBQuery.GetOptions("Category");
+                ViewBag.locations = DBQuery.GetOptions("Locations");
+                ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
+                System.Diagnostics.Debug.WriteLine(b + det + "Hello Timmy");
                 return View();
             }
         }
@@ -207,6 +209,32 @@ namespace UVM1._5.Controllers
             return -1;
 
         }
+
+        public int AddItem(Item item)
+        {
+            item.Description = CorrectPunctuation(item.Description);
+
+            string insert = "Insert into Item (Loc, Brand, Model, YYYY, Color, Condition, " +
+                "Category, Description, Details, Cost, Retail, Created) Output Inserted.Id " +
+                $"\n\bValues ({item.Location}, {item.Brand.Value}, '{item.Model}', '{item.Year}'," +
+                $"\n\b '{item.Color}', {item.Condition.Value}, {item.Category.Value}, '{item.Description}', " +
+                $"\n\b '{item.Details}', {item.Cost}, {item.Retail}, GetDate()); ";
+
+
+            return DBQuery.Insert(insert);
+        }
         
+        public string CorrectPunctuation(string desc)
+        {
+            for(int i = 0; i < desc.Length; i++)
+            {
+                if (desc[i] == '\'')
+                {
+                    desc.Insert(i+1, "'");
+                }
+            }
+
+            return desc;
+        }
     }
 }
