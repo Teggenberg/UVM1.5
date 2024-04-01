@@ -104,24 +104,28 @@ namespace UVM1._5.Controllers
             {
                 item.Brand.Value = DBQuery.Insert($"insert into Brands (Brand_Name) Values ('{b}');");
             }
-            
 
 
 
-            try
-            {
-                AddItem(item);
-                
-                return View("../Home/index");
-            }
-            catch
-            {
-                ViewBag.categories = DBQuery.GetOptions("Category");
-                ViewBag.locations = DBQuery.GetOptions("Locations");
-                ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
-                System.Diagnostics.Debug.WriteLine(b + det + "Hello Timmy");
-                return View();
-            }
+
+            /*   try
+               {
+                   AddItem(item);
+
+                   return View("../Home/index");
+               }
+               catch
+               {
+                   ViewBag.categories = DBQuery.GetOptions("Category");
+                   ViewBag.locations = DBQuery.GetOptions("Locations");
+                   ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
+                   System.Diagnostics.Debug.WriteLine(b + det + "Hello Timmy");
+                   return View();
+               }*/
+
+            AddItem(item);
+
+            return View("../Home/index");
         }
 
         [HttpGet]
@@ -226,15 +230,16 @@ namespace UVM1._5.Controllers
         
         public string CorrectPunctuation(string desc)
         {
+            string corrected = desc;
             for(int i = 0; i < desc.Length; i++)
             {
                 if (desc[i] == '\'')
                 {
-                    desc.Insert(i+1, "'");
+                    corrected = corrected.Insert(i+1, "\'");
                 }
             }
 
-            return desc;
+            return corrected;
         }
     }
 }
