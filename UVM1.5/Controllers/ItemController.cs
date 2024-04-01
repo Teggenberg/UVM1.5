@@ -231,11 +231,13 @@ namespace UVM1._5.Controllers
         public string CorrectPunctuation(string desc)
         {
             string corrected = desc;
+            int index = 1;
             for(int i = 0; i < desc.Length; i++)
             {
                 if (desc[i] == '\'')
                 {
-                    corrected = corrected.Insert(i+1, "\'");
+                    corrected = corrected.Insert(i+index, "\'");
+                    index ++;   
                 }
             }
 
