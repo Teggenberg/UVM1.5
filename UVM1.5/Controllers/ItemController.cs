@@ -80,19 +80,16 @@ namespace UVM1._5.Controllers
             List<Pair> brands = DBQuery.GetOptions("Brands");
             List<Pair> cats = DBQuery.GetOptions("Category");
 
-            int? brandVal = CheckName(item.Brand.Name, brands);
+            item.Brand.Value = CheckName(item.Brand.Name, brands);
             item.Category.Value = CheckName(item.Category.Name, cats);
 
-            if(brandVal != null)
+
+            if(item.Brand.Value == -1)
             {
-                item.Brand.Value = brandVal;
-            }
-            else
-            {
-                item.Brand.Value = DBQuery.Insert($"insert into Brands (Brand_Name) Values ('{b}');");
+                item.Brand.Value = DBQuery.Insert($"insert into Brands (Brand_Name) Values ('{b}') Output Inserted.Id;");
             }
 
-            if(item.Category.Value == null)
+            if(item.Category.Value == -1)
             {
                 item.Category.Value = 26;
             }
@@ -214,7 +211,7 @@ namespace UVM1._5.Controllers
                 }
             }
 
-            return null;
+            return -1;
 
         }
 
