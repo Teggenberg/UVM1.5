@@ -7,6 +7,7 @@ using System.Reflection.Emit;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.CodeAnalysis;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Data;
 
 namespace UVM1._5.Controllers
 {
@@ -28,30 +29,16 @@ namespace UVM1._5.Controllers
 
         public List<string> Categories()
         {
-            List<string> cats = new List<string>();
-            cats.Add("Effect Pedal");
-            cats.Add("Solidbody Electric Guitar");
-            cats.Add("Acousitc-Electric Guitar");
-            cats.Add("Effect Processor");
-            cats.Add("Guitar Combo Amplifier");
-            cats.Add("Guitar Head Amplifier");
-            cats.Add("Solid Body Bass");
-            cats.Add("Folk Instrument");
-            cats.Add("Electronic Drum Set");
-            cats.Add("Single Kick Pedal");
-            cats.Add("Double kick Pedal");
-            cats.Add("Cymbal Stand");
-            cats.Add("Acoustic Guitar");
-            cats.Add("Bass Combo Amplifier");
-            cats.Add("Speaker Cabinet");
-            cats.Add("Keyboard");
-            cats.Add("Pa Powered Speaker");
-            cats.Add("Pa Passive Speaker");
-            cats.Add("Hollowbody electric guitars");
-            cats.Add("Extended range electric guitars");
+            List<string> catname = new List<string>();
+            List<Pair> categories = DBQuery.GetOptions("Category");
+             foreach(var cat in categories)
+            {
+                catname.Add(cat.Name);
+            }
 
 
-            return cats;
+
+            return catname;
 
         }
 
@@ -89,14 +76,14 @@ namespace UVM1._5.Controllers
             item.Category = new Pair(c);
             item.Description = dsc;
             item.Details = det;
-
+            item.Retail += .99m;
             List<Pair> brands = DBQuery.GetOptions("Brands");
             List<Pair> cats = DBQuery.GetOptions("Category");
 
             int? brandVal = CheckName(item.Brand.Name, brands);
             item.Category.Value = CheckName(item.Category.Name, cats);
 
-            if(brandVal != -1)
+            if(brandVal != null)
             {
                 item.Brand.Value = brandVal;
             }
@@ -105,23 +92,11 @@ namespace UVM1._5.Controllers
                 item.Brand.Value = DBQuery.Insert($"insert into Brands (Brand_Name) Values ('{b}');");
             }
 
-
-
-
-            /*   try
-               {
-                   AddItem(item);
-
-                   return View("../Home/index");
-               }
-               catch
-               {
-                   ViewBag.categories = DBQuery.GetOptions("Category");
-                   ViewBag.locations = DBQuery.GetOptions("Locations");
-                   ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
-                   System.Diagnostics.Debug.WriteLine(b + det + "Hello Timmy");
-                   return View();
-               }*/
+            if(item.Category.Value == null)
+            {
+                item.Category.Value = 26;
+            }
+            
 
             AddItem(item);
 
@@ -156,6 +131,35 @@ namespace UVM1._5.Controllers
 
             return new JsonResult(Ok(await ai.GetYear(brnd, ser)));
 
+        }
+
+        public ActionResult List()
+        {
+            List<Item?> list = new List<Item?>();
+            string select = "select * from item\r\njoin Brands on Brand = Brands.Id\r\njoin Category on Category = Category.Id;";
+            DataTable items = DBQuery.SelectAll(select);
+
+            for(int i = 0; i < items.Rows.Count; i++)
+            {
+                Item item = new Item()
+                {
+                    Id = Convert.ToInt32(items.Rows[i][0]),
+                    Location = Convert.ToInt32(items.Rows[i][1]),
+                    Brand = new Pair((string?)items.Rows[i][14], Convert.ToInt32(items.Rows[i][2])),
+                    Model = (string?)items.Rows[i][3],
+                    Year = (string?)items.Rows[i][4],
+                    Color = (string?)items.Rows[i][5],
+                    Condition = new Pair("test", Convert.ToInt32(items.Rows[i][6])),
+                    Category = new Pair((string?)items.Rows[i][14], Convert.ToInt32(items.Rows[i][7])),
+                    Description = (string?)items.Rows[i][8],
+                    Details = (string?)items.Rows[i][9],
+                    Cost = (decimal?)items.Rows[i][10],
+                    Retail = (decimal?)items.Rows[i][11],
+
+                };
+                list.Add(item); 
+            }
+            return View(list);
         }
 
         // GET: ItemController/Edit/5
@@ -204,13 +208,13 @@ namespace UVM1._5.Controllers
         {
             foreach(var item in list)
             {
-                if(name == item.Name)
+                if(name.ToUpper() == item.Name.ToUpper())
                 {
                     return item.Value!;
                 }
             }
 
-            return -1;
+            return null;
 
         }
 

@@ -25,6 +25,10 @@ namespace UVM1._5.Controllers
             // query table for values to populate list using column and table parameters
             SqlConnection sqlconn = new(GetConnectionString());
             string sqlquery = $"select * from {table}";
+            if(table == "Category")
+            {
+                sqlquery += " where Category_name != 'Ai Failure';";
+            }
             if(order != "")
             {
                 sqlquery += $"\nOrder by {order};";
@@ -66,6 +70,21 @@ namespace UVM1._5.Controllers
             System.Diagnostics.Debug.WriteLine("New ID : " + newId);
             sqlconn.Close();
             return newId;
+        }
+
+        public static DataTable SelectAll(string selectQuery)
+        {
+
+            // query table for values to populate list using column and table parameters
+            SqlConnection sqlconn = new(GetConnectionString());
+            SqlCommand sqlcomm = new(selectQuery, sqlconn);
+            sqlconn.Open();
+            SqlDataAdapter adapter = new(sqlcomm);
+            DataTable dt = new();
+            adapter.Fill(dt);
+            sqlconn.Close();
+            return dt;
+
         }
 
 

@@ -11,10 +11,10 @@
             Value = 0;
         }
 
-        public Pair(string name)
+        public Pair(string name, int value = 0)
         {
             Name = name;
-            Value = 0;
+            Value = value;
         }
     }
 }

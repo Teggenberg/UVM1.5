@@ -11,8 +11,8 @@
         public Pair? Category { get; set; }
         public string? Serial { get; set; }
         public Pair? Condition { get; set; }
-        public float?  Retail {  get; set; }
-        public float? Cost { get; set; }
+        public decimal?  Retail {  get; set; }
+        public decimal? Cost { get; set; }
         public string? Description { get; set; }
        
         public string? Details { get; set; }

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<UVM1._5.Models.Item>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+
+
+<p>
+    <a asp-action="Create">Add New Listing</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Item ID
+            </th>
+            <th>
+                Store
+            </th>
+            <th>
+                Item
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Retail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+@*             <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Details)
+            </th> *@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                
+                <a asp-action="Edit" asp-route-id="@item.Id">@item.Id</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+                @Html.DisplayFor(modelItem => item.Brand.Name)
+                @Html.DisplayFor(modelItem => item.Model)
+                @Html.DisplayFor(modelItem => item.Color)
+                   
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Retail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>
