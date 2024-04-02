@@ -19,6 +19,9 @@
                 Store
             </th>
             <th>
+				Image
+            </th>
+            <th>
                 Item
             </th>
 
@@ -46,6 +49,14 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                    @if(item.Images == null){
+                        <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
+                    }
+                    
+                    
+                    
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Year)

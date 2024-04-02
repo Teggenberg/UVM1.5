@@ -86,7 +86,8 @@ namespace UVM1._5.Controllers
 
             if(item.Brand.Value == -1)
             {
-                item.Brand.Value = DBQuery.Insert($"insert into Brands (Brand_Name) Values ('{b}') Output Inserted.Id;");
+                item.Brand.Value = DBQuery.Insert
+                    ($"insert into Brands (Brand_Name) \nOutput Inserted.Id \nValues ('{b}');");
             }
 
             if(item.Category.Value == -1)

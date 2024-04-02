@@ -156,7 +156,7 @@
             <div class=" col-md-4 mt-4">
 
                 <div class="form-group mt-2">
-                    <input type="submit" value="Create Listing" class="btn btn-primary col-12"  />
+                    <input type="submit" value="Create Listing" class="btn btn-primary col-12" onclick="return formComplete()"  />
                 </div>
 
             </div>
@@ -180,6 +180,39 @@
     var details = document.getElementById("details");
     var det_rend = document.getElementById("details_render");
     var title = document.getElementById("title");
+    var cost = document.getElementById("cost");
+    var retail = document.getElementById("retail");
+
+
+    function formComplete(){
+        if (loc.value == '') {
+            alert("Please select a location.")
+            return false;
+        }
+        if (brand.value == '') {
+            alert("Please enter a brand.")
+            return false;
+        }
+        if (model.value == '') {
+            alert("Please enter a model.")
+            return false;
+        }
+        if (cat.value == '') {
+            alert("Please select a category.")
+            return false;
+        }
+        if (Retail.value == '') {
+            alert("Please enter a retail amount.")
+            return false;
+        }
+        if (Cost.value == '') {
+            alert("Please enter a cost amount.")
+            return false;
+        }
+        
+        
+        return true;
+    }
 
     loc.addEventListener("change", (e) => {
         brand.disabled = false;
@@ -306,8 +339,7 @@
 
     document.getElementById("cost").addEventListener("change", (e) => {
         var gm = document.getElementById("gm");
-        var cost = document.getElementById("cost");
-        var retail = document.getElementById("retail");
+        
         if (retail.value > 0) {
             var margin = (1 - (cost.value / retail.value )) * 100;
             gm.value = margin.toFixed(2);
