@@ -51,8 +51,11 @@
                 @Html.DisplayFor(modelItem => item.Location)
             </td>
             <td>
-                    @if(item.Images == null){
+                    @if(item.Images.Count == 0){
                         <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
+                    }
+                    else{
+                        <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(item.DisplayIMG)"  />
                     }
                     
                     

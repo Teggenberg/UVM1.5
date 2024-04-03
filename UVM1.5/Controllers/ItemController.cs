@@ -8,6 +8,7 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.CodeAnalysis;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Data;
+using System.Drawing;
 
 namespace UVM1._5.Controllers
 {
@@ -96,7 +97,8 @@ namespace UVM1._5.Controllers
             }
             
 
-            AddItem(item);
+            int image_id = AddItem(item);
+            AddImageRows(image_id);
 
             return View("../Home/index");
         }
@@ -156,8 +158,15 @@ namespace UVM1._5.Controllers
                     Serial = (string?)items.Rows[i][13]
 
                 };
+
+                item.Images = DBQuery.GetImages(item.Id);
+                if(item.Images.Count != 0)
+                {
+                    item.DisplayIMG = item.Images[0];
+                }
+                
                 list.Add(item);
-                AddImageRows(item.Id);
+          
             }
             return View(list);
         }
@@ -172,39 +181,12 @@ namespace UVM1._5.Controllers
             ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
 
             Item item = GetItem(id);
-            /*string select = $"select * from item" +
-                $"\r\njoin Brands on Brand = Brands.Id" +
-                "\r\njoin Category on Category = Category.Id" +
-                $"\r\nwhere item.Id = {id};";
-            DataTable items = DBQuery.SelectAll(select);
-
-            for (int i = 0; i < items.Rows.Count; i++)
-            {
-                item = new Item()
-                {
-                    Id = Convert.ToInt32(items.Rows[i][0]),
-                    Location = Convert.ToInt32(items.Rows[i][1]),
-                    Brand = new Pair((string?)items.Rows[i][15], Convert.ToInt32(items.Rows[i][2])),
-                    Model = (string?)items.Rows[i][3],
-                    Year = (string?)items.Rows[i][4],
-                    Color = (string?)items.Rows[i][5],
-                    Condition = new Pair("test", Convert.ToInt32(items.Rows[i][6])),
-                    Category = new Pair((string?)items.Rows[i][17], Convert.ToInt32(items.Rows[i][7])),
-                    Description = (string?)items.Rows[i][8],
-                    Details = (string?)items.Rows[i][9],
-                    Cost = (decimal?)items.Rows[i][10],
-                    Retail = (decimal?)items.Rows[i][11],
-                    Serial = (string?)items.Rows[i][13]
-
-                };
-
-            }*/
 
             return View(item);
         }
 
         // POST: ItemController/Edit/5
-       /* [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditItem()
         {
@@ -216,7 +198,7 @@ namespace UVM1._5.Controllers
             {
                 return View();
             }
-        }*/
+        }
 
         // GET: ItemController/Delete/5
         public ActionResult Delete(int id)
@@ -284,13 +266,28 @@ namespace UVM1._5.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadPhotos(int id)
+        public IActionResult UploadPhotos(int id, IFormFile image1, IFormFile image2, IFormFile image3)
         {
             System.Diagnostics.Debug.WriteLine("This is where the photos would be uploaded");
 
             Item item = new Item();
 
             //int item_id = int.Parse(id);
+            if(image1 != null)
+            {
+                DBQuery.AddImageToDB(id, 1, ImageHandler.ConvertImageFile(image1));
+            }
+
+            if(image2 != null)
+            {
+                DBQuery.AddImageToDB(id, 2, ImageHandler.ConvertImageFile(image2));
+            }
+
+            if (image3 != null)
+            {
+                DBQuery.AddImageToDB(id, 3, ImageHandler.ConvertImageFile(image3));
+            }
+
 
             ViewBag.categories = DBQuery.GetOptions("Category");
             ViewBag.locations = DBQuery.GetOptions("Locations");

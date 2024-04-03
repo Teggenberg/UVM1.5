@@ -87,6 +87,66 @@ namespace UVM1._5.Controllers
 
         }
 
+        public static void AddImageToDB(int fk, int position, byte[] image)
+        {
+            SqlConnection sqlconn = new(GetConnectionString());
+            const string sql_insert_string =
+                "Update Item_Image " +
+                "\r\nSet Item_Image = @image_byte_array" +
+                "\r\nWhere Item_Id = @Item_Id" +
+                "\r\nAnd Position = @Position;";
+
+            var byteParam = new SqlParameter("@image_byte_array", SqlDbType.VarBinary)
+            {
+                Direction = ParameterDirection.Input,
+                Size = image.Length,
+                Value = image
+            };
+
+            var imageIdParam = new SqlParameter("@Item_id", SqlDbType.Int, 4)
+            {
+                Direction = ParameterDirection.Input,
+                Value = fk
+            };
+
+            var positionParam = new SqlParameter("@Position", SqlDbType.Int, 4)
+            {
+                Direction = ParameterDirection.Input,
+                Value = position
+            };
+
+            SqlTransaction transaction = null;
+            SqlCommand sqlcomm = new(sql_insert_string, sqlconn, transaction);
+            sqlcomm.Parameters.Add(byteParam);
+            sqlcomm.Parameters.Add(imageIdParam);
+            sqlcomm.Parameters.Add(positionParam);
+            sqlconn.Open();
+            sqlcomm.ExecuteNonQuery();
+            sqlconn.Close();
+        }
+
+        public static List<byte[]>? GetImages(int? itemId)
+        {
+            List<byte[]>? quoteImages = new();
+
+            string query = $"select Item_Image from Item_Image " +
+                $"\r\n where Item_Id = {itemId}" +
+                $"\r\nAnd Item_Image is not null;";
+
+            DataTable dt = SelectAll(query);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if(dt.Rows[i][0] != null)
+                {
+                    quoteImages.Add((byte[])dt.Rows[i][0]);
+                }
+                
+            }
+
+            return quoteImages;
+        }
+
 
 
 
