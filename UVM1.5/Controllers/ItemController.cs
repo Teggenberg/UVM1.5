@@ -156,7 +156,8 @@ namespace UVM1._5.Controllers
                     Serial = (string?)items.Rows[i][13]
 
                 };
-                list.Add(item); 
+                list.Add(item);
+                AddImageRows(item.Id);
             }
             return View(list);
         }
@@ -164,13 +165,14 @@ namespace UVM1._5.Controllers
         // GET: ItemController/Edit/5
         public ActionResult EditItem(int id)
         {
-            Item item = null;
+           
 
             ViewBag.categories = DBQuery.GetOptions("Category");
             ViewBag.locations = DBQuery.GetOptions("Locations");
             ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
 
-            string select = $"select * from item" +
+            Item item = GetItem(id);
+            /*string select = $"select * from item" +
                 $"\r\njoin Brands on Brand = Brands.Id" +
                 "\r\njoin Category on Category = Category.Id" +
                 $"\r\nwhere item.Id = {id};";
@@ -195,15 +197,14 @@ namespace UVM1._5.Controllers
                     Serial = (string?)items.Rows[i][13]
 
                 };
-                //return View(item);
-                //list.Add(item);
-            }
+
+            }*/
 
             return View(item);
         }
 
         // POST: ItemController/Edit/5
-        [HttpPost]
+       /* [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditItem()
         {
@@ -215,7 +216,7 @@ namespace UVM1._5.Controllers
             {
                 return View();
             }
-        }
+        }*/
 
         // GET: ItemController/Delete/5
         public ActionResult Delete(int id)
@@ -280,6 +281,70 @@ namespace UVM1._5.Controllers
             }
 
             return corrected;
+        }
+
+        [HttpPost]
+        public IActionResult UploadPhotos(int id)
+        {
+            System.Diagnostics.Debug.WriteLine("This is where the photos would be uploaded");
+
+            Item item = new Item();
+
+            //int item_id = int.Parse(id);
+
+            ViewBag.categories = DBQuery.GetOptions("Category");
+            ViewBag.locations = DBQuery.GetOptions("Locations");
+            ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
+
+            item = GetItem(id);
+
+            return View("EditItem", item);
+        }
+
+        public Item GetItem(int id)
+        {
+            Item item = null;   
+            string select = $"select * from item" +
+                $"\r\njoin Brands on Brand = Brands.Id" +
+                "\r\njoin Category on Category = Category.Id" +
+                $"\r\nwhere item.Id = {id};";
+            DataTable items = DBQuery.SelectAll(select);
+
+            for (int i = 0; i < items.Rows.Count; i++)
+            {
+                item = new Item()
+                {
+                    Id = Convert.ToInt32(items.Rows[i][0]),
+                    Location = Convert.ToInt32(items.Rows[i][1]),
+                    Brand = new Pair((string?)items.Rows[i][15], Convert.ToInt32(items.Rows[i][2])),
+                    Model = (string?)items.Rows[i][3],
+                    Year = (string?)items.Rows[i][4],
+                    Color = (string?)items.Rows[i][5],
+                    Condition = new Pair("test", Convert.ToInt32(items.Rows[i][6])),
+                    Category = new Pair((string?)items.Rows[i][17], Convert.ToInt32(items.Rows[i][7])),
+                    Description = (string?)items.Rows[i][8],
+                    Details = (string?)items.Rows[i][9],
+                    Cost = (decimal?)items.Rows[i][10],
+                    Retail = (decimal?)items.Rows[i][11],
+                    Serial = (string?)items.Rows[i][13]
+                };
+
+            }
+            return item;
+        }
+
+        public void AddImageRows(int? Id)
+        {
+            
+
+            for(int i = 1; i < 5;  i++)
+            {
+                string query = "Insert into Item_Image (Item_Id, Position)" +
+                $"\r\nValues ({Id},{i})";
+                DBQuery.Insert(query);
+            }
+
+
         }
     }
 }
