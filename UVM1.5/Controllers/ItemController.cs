@@ -143,16 +143,17 @@ namespace UVM1._5.Controllers
                 {
                     Id = Convert.ToInt32(items.Rows[i][0]),
                     Location = Convert.ToInt32(items.Rows[i][1]),
-                    Brand = new Pair((string?)items.Rows[i][14], Convert.ToInt32(items.Rows[i][2])),
+                    Brand = new Pair((string?)items.Rows[i][15], Convert.ToInt32(items.Rows[i][2])),
                     Model = (string?)items.Rows[i][3],
                     Year = (string?)items.Rows[i][4],
                     Color = (string?)items.Rows[i][5],
                     Condition = new Pair("test", Convert.ToInt32(items.Rows[i][6])),
-                    Category = new Pair((string?)items.Rows[i][14], Convert.ToInt32(items.Rows[i][7])),
+                    Category = new Pair((string?)items.Rows[i][17], Convert.ToInt32(items.Rows[i][7])),
                     Description = (string?)items.Rows[i][8],
                     Details = (string?)items.Rows[i][9],
                     Cost = (decimal?)items.Rows[i][10],
                     Retail = (decimal?)items.Rows[i][11],
+                    Serial = (string?)items.Rows[i][13]
 
                 };
                 list.Add(item); 
@@ -161,15 +162,50 @@ namespace UVM1._5.Controllers
         }
 
         // GET: ItemController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditItem(int id)
         {
-            return View();
+            Item item = null;
+
+            ViewBag.categories = DBQuery.GetOptions("Category");
+            ViewBag.locations = DBQuery.GetOptions("Locations");
+            ViewBag.brands = DBQuery.GetOptions("Brands", "Brand_Name");
+
+            string select = $"select * from item" +
+                $"\r\njoin Brands on Brand = Brands.Id" +
+                "\r\njoin Category on Category = Category.Id" +
+                $"\r\nwhere item.Id = {id};";
+            DataTable items = DBQuery.SelectAll(select);
+
+            for (int i = 0; i < items.Rows.Count; i++)
+            {
+                item = new Item()
+                {
+                    Id = Convert.ToInt32(items.Rows[i][0]),
+                    Location = Convert.ToInt32(items.Rows[i][1]),
+                    Brand = new Pair((string?)items.Rows[i][15], Convert.ToInt32(items.Rows[i][2])),
+                    Model = (string?)items.Rows[i][3],
+                    Year = (string?)items.Rows[i][4],
+                    Color = (string?)items.Rows[i][5],
+                    Condition = new Pair("test", Convert.ToInt32(items.Rows[i][6])),
+                    Category = new Pair((string?)items.Rows[i][17], Convert.ToInt32(items.Rows[i][7])),
+                    Description = (string?)items.Rows[i][8],
+                    Details = (string?)items.Rows[i][9],
+                    Cost = (decimal?)items.Rows[i][10],
+                    Retail = (decimal?)items.Rows[i][11],
+                    Serial = (string?)items.Rows[i][13]
+
+                };
+                //return View(item);
+                //list.Add(item);
+            }
+
+            return View(item);
         }
 
         // POST: ItemController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditItem()
         {
             try
             {
@@ -221,10 +257,10 @@ namespace UVM1._5.Controllers
             item.Description = CorrectPunctuation(item.Description);
 
             string insert = "Insert into Item (Loc, Brand, Model, YYYY, Color, Condition, " +
-                "Category, Description, Details, Cost, Retail, Created) Output Inserted.Id " +
+                "Category, Description, Details, Cost, Retail, Created, Serial) Output Inserted.Id " +
                 $"\n\bValues ({item.Location}, {item.Brand.Value}, '{item.Model}', '{item.Year}'," +
                 $"\n\b '{item.Color}', {item.Condition.Value}, {item.Category.Value}, '{item.Description}', " +
-                $"\n\b '{item.Details}', {item.Cost}, {item.Retail}, GetDate()); ";
+                $"\n\b '{item.Details}', {item.Cost}, {item.Retail}, GetDate(), '{item.Serial}');";
 
 
             return DBQuery.Insert(insert);
