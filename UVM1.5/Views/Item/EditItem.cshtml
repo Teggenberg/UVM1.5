@@ -37,158 +37,186 @@
     <div>
         <form asp-action="UploadPhotos" enctype="multipart/form-data" AllowMultiple="true" runat="server"  class="row d-inline-flex col-12">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <h4 name="id">@Model.Id</h4><h4> - @Model.Year @Model.Brand.Name @Model.Model @Model.Color</h4>
-            <hr />
-            <div class="row d-inline-flex col-12">
-
-               @*  <div class="form-group">
-                    <label asp-for="Id" class="control-label form-label my-0"></label>
-                    <input asp-for="Id" id="id" class="form-control" name="id" />
+           @*  <div class="form-group">
+                <label asp-for="Id" class="control-label form-label my-0"></label>
+                <input asp-for="Id" id="id" class="form-control " name="id" style="border: none" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div> *@
+            <div class="d-flex flex-column text-center">
+                <div class="form-group">
+                    @* <label asp-for="Id" class="control-label form-label my-0"></label> *@
+                    <input asp-for="Id" id="id" class="form-control text-center id-header " name="id" style="border: none" readonly="readonly"/>
                     <span asp-validation-for="Id" class="text-danger"></span>
-                </div> *@
-
-                <div id="item-info col-lg-4">
-
-                    <div class="form-group">
-                        <label asp-for="Brand" class="control-label form-label my-0"></label>
-                        <input id="brand" name="b" type="search" list="brandlist" asp-for="Brand.Name" class="form-control" disabled="true" />
-                        <span asp-validation-for="Brand.Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Model" class="control-label form-label my-0"></label>
-                        <input id="model" asp-for="Model" class="form-control" disabled="true" />
-                        <span asp-validation-for="Model" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Color" class="control-label form-label my-0"></label>
-                        <input id="color" asp-for="Color" class="form-control" disabled="true" />
-                        <span asp-validation-for="Color" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Year" class="control-label form-label my-0"></label>
-                        <input id="year" asp-for="Year" class="form-control" />
-                        <span asp-validation-for="Year" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Category" class="control-label form-label my-0"></label>
-                        <input id="cat" name="c" asp-for="Category.Name" class="form-control" disabled="true" list="cat_options" />
-                        <span asp-validation-for="Category.Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Serial" class="control-label form-label my-0"></label>
-                        <input id="serial" asp-for="Serial" class="form-control" onblur="parseSerial()" />
-                        <span asp-validation-for="Serial" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Condition" class="control-label form-label my-0"></label>
-                        <select asp-for="Condition.Value" class="form-control" list="condition_options">
-                            <option value="0"></option>
-                            <option value="5">Excellent</option>
-                            <option value="4">Great</option>
-                            <option value="3">Good</option>
-                            <option value="2">Fair</option>
-
-                        </select>
-                        <span asp-validation-for="Condition.Value" class="text-danger"></span>
-                    </div>
-                    <div class="d-inline-flex justify-content-between">
-
-                        <div class="form-group col-4">
-                            <label asp-for="Retail" class="control-label form-label my-0"></label>
-                            <div class="d-inline-flex">
-                                <input asp-for="Retail" id="retail" class="form-control text-end" type="number" /><div class="py-2">.99</div>
-                            </div>
-                            <span asp-validation-for="Retail" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-4">
-                            <label asp-for="Cost" class="control-label form-label my-0"></label>
-                            <input asp-for="Cost" type="number" id="cost" class="form-control text-end" />
-                            <span asp-validation-for="Cost" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-3">
-                            <label class="control-label form-label my-0">GM</label>
-                            <div class="d-inline-flex">
-                                <input id="gm" class="form-control text-end" readonly="readonly" /><div class="py-2">%</div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
                 </div>
+                <h4>@Model.Year @Model.Brand.Name @Model.Model @Model.Color</h4>
+            </div>
+            
+            <div class="form-group mt-2 d-flex justify-content-center mb-2">
+                <input value="Info" type="button" class="btn btn-secondary col-3 mx-5" onclick="seeInfo()" />
+                <input  value="Photos" type ="button" class="btn btn-secondary col-3 mx-5" onclick="seePhotos()" />
+                
+            </div>
+            <hr />
+            <div >
 
-                <div class="col-lg-8">
+                
+
+                <div id="item-info" >
+                    <div class="row d-inline-flex col-12">
+
+                        <div class="col-lg-4">
+
+                            <div class="form-group">
+                                <label asp-for="Brand" class="control-label form-label my-0"></label>
+                                <input id="brand" name="b" type="search" list="brandlist" asp-for="Brand.Name" class="form-control" disabled="true" />
+                                <span asp-validation-for="Brand.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Model" class="control-label form-label my-0"></label>
+                                <input id="model" asp-for="Model" class="form-control" disabled="true" />
+                                <span asp-validation-for="Model" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Color" class="control-label form-label my-0"></label>
+                                <input id="color" asp-for="Color" class="form-control" disabled="true" />
+                                <span asp-validation-for="Color" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Year" class="control-label form-label my-0"></label>
+                                <input id="year" asp-for="Year" class="form-control" />
+                                <span asp-validation-for="Year" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Category" class="control-label form-label my-0"></label>
+                                <input id="cat" name="c" asp-for="Category.Name" class="form-control" disabled="true" list="cat_options" />
+                                <span asp-validation-for="Category.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Serial" class="control-label form-label my-0"></label>
+                                <input id="serial" asp-for="Serial" class="form-control" onblur="parseSerial()" />
+                                <span asp-validation-for="Serial" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Condition" class="control-label form-label my-0"></label>
+                                <select asp-for="Condition.Value" class="form-control" list="condition_options">
+                                    <option value="0"></option>
+                                    <option value="5">Excellent</option>
+                                    <option value="4">Great</option>
+                                    <option value="3">Good</option>
+                                    <option value="2">Fair</option>
+
+                                </select>
+                                <span asp-validation-for="Condition.Value" class="text-danger"></span>
+                            </div>
+                            <div class="d-inline-flex justify-content-between">
+
+                                <div class="form-group col-4">
+                                    <label asp-for="Retail" class="control-label form-label my-0"></label>
+                                    <div class="d-inline-flex">
+                                        <input asp-for="Retail" id="retail" class="form-control text-end" type="number" /><div class="py-2">.99</div>
+                                    </div>
+                                    <span asp-validation-for="Retail" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label asp-for="Cost" class="control-label form-label my-0"></label>
+                                    <input asp-for="Cost" type="number" id="cost" class="form-control text-end" />
+                                    <span asp-validation-for="Cost" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-3">
+                                    <label class="control-label form-label my-0">GM</label>
+                                    <div class="d-inline-flex">
+                                        <input id="gm" class="form-control text-end" readonly="readonly" /><div class="py-2">%</div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
 
-                    <div class="form-group">
-                        <label class="control-label form-label my-0">Listing Title Preview:</label>
-                        <input id="title" class="form-control" />
+                        <div class="col-lg-8">
 
-                    </div>
 
-                    <div class="col">
-                        <label asp-for="Description" class="control-label form-label my-2"></label>
-                        <textarea id="desc" asp-for="Description" rows="6" class="col-12 form-control" name="dsc">
-                            @Model.Description
+                            <div class="form-group">
+                                <label class="control-label form-label my-0">Listing Title Preview:</label>
+                                <input id="title" class="form-control" />
+
+                            </div>
+
+                            <div class="col">
+                                <label asp-for="Description" class="control-label form-label my-2"></label>
+                                <textarea id="desc" asp-for="Description" rows="6" class="col-12 form-control" name="dsc">
+                                    @Model.Description
                         </textarea>
 
+                            </div>
+
+                            <div>
+                                <label asp-for="Details" class="control-label form-label my-2"></label>
+                                <textarea id="details" name="det" asp-for="Details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex:   upgraded tuners, buckle rash, refinished"></textarea>
+                                <label class="text-center form-label my-2">Details Preview:</label>
+                                <p id="details_render">
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
                     </div>
+                    
 
-                    <div>
-                        <label asp-for="Details" class="control-label form-label my-2"></label>
-                        <textarea id="details" name="det" asp-for="Details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex:   upgraded tuners, buckle rash, refinished"></textarea>
-                        <label class="text-center form-label my-2">Details Preview:</label>
-                        <p id="details_render">
 
-                        </p>
-
-                    </div>
 
                 </div>
+
+                
                 
                 <div id="item-photos">
 
-                    <div class=" my-2">
+                    <div class="my-2 d-flex">
 
 
-                        <div class="col d-flex flex-column">
-
+                        <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
+                            <label class="form-label text-center">Image #1 </label>
                             @if (Model.Images[0] != null)
                             {
                                 <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" />
-                                <a href="">Delete</a>
+                                
                             }
                             else
                             {
                                 <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
                             }
+                            <div class="col-8 d-flex justify-content-center align-items-center">
+                                <label class="form-label mx-2">Update: </label>
+                                <input type="file" name="image1" class="my-1 ml-1 form-control" />
+                            </div>
 
                         </div>
 
-                        <div class="col-6">
-                            <input type="file" name="image1" class="form-control" class="col-6" />
-                        </div>
+                        
 
 
 
-                        <div class="col d-flex flex-column">
-
+                        <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
+                            <label class="form-label text-center">Image #2 </label>
                             @if (Model.Images[1] != null)
                             {
                                 <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[1])" />
-                                <a href="">Delete</a>
+
                             }
                             else
                             {
                                 <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
                             }
+                            <div class="col-8 d-flex justify-content-center align-items-center">
+                                <label class="form-label mx-2">Update: </label>
+                                <input type="file" name="image1" class="my-1 ml-1 form-control" />
+                            </div>
 
-                        </div>
-
-                        <div class="col-6">
-                            <input type="file" name="image1" class="form-control" class="col-6" />
                         </div>
 
 
@@ -197,27 +225,41 @@
 
                     <div class="d-flex my-2">
 
-                        @if (Model.Images[2] != null)
-                        {
-                            <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[2])" />
-                        }
-                        else
-                        {
-                            <div class="col-6">
-                                <input type="file" name="image3" class="form-control" class="col-6" />
-                            </div>
-                        }
+                        <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
+                            <label class="form-label text-center">Image #3 </label>
+                            @if (Model.Images[2] != null)
+                            {
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[2])" />
 
-                        @if (Model.Images[3] != null)
-                        {
-                            <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3])" />
-                        }
-                        else
-                        {
-                            <div class="col-6">
-                                <input type="file" name="last" class="form-control" class="col-6" />
+                            }
+                            else
+                            {
+                                <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
+                            }
+                            <div class="col-8 d-flex justify-content-center align-items-center">
+                                <label class="form-label mx-2">Update: </label>
+                                <input type="file" name="image1" class="my-1 ml-1 form-control" />
                             </div>
-                        }
+
+                        </div>
+
+                        <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
+                            <label class="form-label text-center">Image #4 </label>
+                            @if (Model.Images[3] != null)
+                            {
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3])" />
+
+                            }
+                            else
+                            {
+                                <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
+                            }
+                            <div class="col-8 d-flex justify-content-center align-items-center">
+                                <label class="form-label mx-2">Update: </label>
+                                <input type="file" name="image1" class="my-1 ml-1 form-control" />
+                            </div>
+
+                        </div>
 
 
                     </div>
@@ -250,6 +292,22 @@
 
 </div>
 
+<script>
+    var photos = document.getElementById("item-photos");
+    var info = document.getElementById("item-info")
+
+    function seePhotos(){
+        photos.style.display = "block";
+        info.style.display = "none";
+    }
+
+    function seeInfo(){
+        photos.style.display = "none";
+        info.style.display = "block";
+    }
+</script>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
 }
