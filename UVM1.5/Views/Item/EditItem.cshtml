@@ -146,25 +146,64 @@
 
                 </div>
 
-                    <div class="d-flex my-2">
-                        <div class="col-6">
-                            <input type="file" name="image1" class="form-control" class="col-6" />
-                        </div>
+                <div class="d-flex my-2">
 
-                        <div class="col-6">
-                            <input type="file" name="image2" class="form-control" class="col-6" />
-                        </div>
-                    </div>
+                   
+                    
+                        @if(Model.Images[0] != null)
+                        {
+                            <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" />
+                        }
+                        else
+                        {
+                            <div class="col-6">
+                                <input type="file" name="image1" class="form-control" class="col-6" />
+                            </div> 
+                        }
+                    
 
-                    <div class="d-flex my-2">
+                    
+                     @if (Model.Images[1] != null)
+                     {
+                         <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[1])" />
+                     }
+                     else
+                     {
+                         <div class="col-6">
+                             <input type="file" name="image2" class="form-control" class="col-6" />
+                         </div>
+                     }
+                    
+
+
+                </div>
+
+                <div class="d-flex my-2">
+
+                    @if (Model.Images[2] != null)
+                    {
+                        <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[2])" />
+                    }
+                    else
+                    {
                         <div class="col-6">
                             <input type="file" name="image3" class="form-control" class="col-6" />
                         </div>
+                    }
 
+                    @if (Model.Images[3] != null)
+                    {
+                        <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3])" />
+                    }
+                    else
+                    {
                         <div class="col-6">
-                            <input type="file" name="image4" class="form-control" class="col-6" />
+                            <input type="file" name="last" class="form-control" class="col-6" />
                         </div>
-                    </div>
+                    }
+
+                       
+                </div>
 
                 
                 

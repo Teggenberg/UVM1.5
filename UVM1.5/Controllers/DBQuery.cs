@@ -125,11 +125,16 @@ namespace UVM1._5.Controllers
             sqlconn.Close();
         }
 
-        public static List<byte[]>? GetImages(int? itemId)
+        public static List<byte[]?>? GetImages(int? itemId)
         {
-            List<byte[]>? quoteImages = new();
+            List<byte[]?>? itemImages = new();
+            for(int i = 0; i < 4; i++)
+            {
+                byte[] image = null;
+                itemImages.Add(image);
+            }
 
-            string query = $"select Item_Image from Item_Image " +
+            string query = $"select Item_Image, Position from Item_Image " +
                 $"\r\n where Item_Id = {itemId}" +
                 $"\r\nAnd Item_Image is not null;";
 
@@ -139,12 +144,12 @@ namespace UVM1._5.Controllers
             {
                 if(dt.Rows[i][0] != null)
                 {
-                    quoteImages.Add((byte[])dt.Rows[i][0]);
+                    itemImages[Convert.ToInt32(dt.Rows[i][1])-1] = (byte[])dt.Rows[i][0];
                 }
                 
             }
 
-            return quoteImages;
+            return itemImages;
         }
 
 

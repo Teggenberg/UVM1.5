@@ -266,7 +266,7 @@ namespace UVM1._5.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadPhotos(int id, IFormFile image1, IFormFile image2, IFormFile image3)
+        public IActionResult UploadPhotos(int id, IFormFile? image1, IFormFile? image2, IFormFile? last, IFormFile? image3)
         {
             System.Diagnostics.Debug.WriteLine("This is where the photos would be uploaded");
 
@@ -286,6 +286,11 @@ namespace UVM1._5.Controllers
             if (image3 != null)
             {
                 DBQuery.AddImageToDB(id, 3, ImageHandler.ConvertImageFile(image3));
+            }
+
+            if (last != null)
+            {
+                DBQuery.AddImageToDB(id, 4, ImageHandler.ConvertImageFile(last));
             }
 
 
@@ -325,6 +330,8 @@ namespace UVM1._5.Controllers
                     Retail = (decimal?)items.Rows[i][11],
                     Serial = (string?)items.Rows[i][13]
                 };
+
+                item.Images = DBQuery.GetImages(item.Id);
 
             }
             return item;

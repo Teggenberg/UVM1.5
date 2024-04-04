@@ -16,7 +16,7 @@
         public string? Description { get; set; }
        
         public string? Details { get; set; }
-        public List<byte[]>? Images { get; set; }
+        public List<byte[]?>? Images { get; set; }
         public byte[] DisplayIMG { get; set; }
     }
 
