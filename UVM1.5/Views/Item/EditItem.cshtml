@@ -37,21 +37,16 @@
     <div>
         <form asp-action="UploadPhotos" enctype="multipart/form-data" AllowMultiple="true" runat="server"  class="row d-inline-flex col-12">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           @*  <div class="form-group">
-                <label asp-for="Id" class="control-label form-label my-0"></label>
-                <input asp-for="Id" id="id" class="form-control " name="id" style="border: none" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div> *@
+
             <div class="d-flex flex-column text-center">
                 <div class="form-group">
-                    @* <label asp-for="Id" class="control-label form-label my-0"></label> *@
                     <input asp-for="Id" id="id" class="form-control text-center id-header " name="id" style="border: none" readonly="readonly"/>
                     <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
                 <h4>@Model.Year @Model.Brand.Name @Model.Model @Model.Color</h4>
             </div>
             
-            <div class="form-group mt-2 d-flex justify-content-center mb-2">
+            <div class="form-group my-4 d-flex justify-content-center ">
                 <input value="Info" type="button" class="btn btn-secondary col-3 mx-5" onclick="seeInfo()" />
                 <input  value="Photos" type ="button" class="btn btn-secondary col-3 mx-5" onclick="seePhotos()" />
                 
@@ -138,17 +133,12 @@
                         <div class="col-lg-8">
 
 
-                            <div class="form-group">
-                                <label class="control-label form-label my-0">Listing Title Preview:</label>
-                                <input id="title" class="form-control" />
-
-                            </div>
 
                             <div class="col">
                                 <label asp-for="Description" class="control-label form-label my-2"></label>
                                 <textarea id="desc" asp-for="Description" rows="6" class="col-12 form-control" name="dsc">
                                     @Model.Description
-                        </textarea>
+                                </textarea>
 
                             </div>
 
@@ -167,7 +157,13 @@
 
                     </div>
                     
+                    <div class=" col my-5 d-flex justify-content-center">
 
+                        <div class="form-group mt-2 col-6">
+                            <input  value="Update Info" class="btn btn-danger col-12" onclick="return formComplete()" />
+                        </div>
+
+                    </div>
 
 
                 </div>
@@ -176,7 +172,7 @@
                 
                 <div id="item-photos">
 
-                    <div class="my-2 d-flex">
+                    <div class="my-2 d-lg-flex ">
 
 
                         <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
@@ -214,7 +210,7 @@
                             }
                             <div class="col-8 d-flex justify-content-center align-items-center">
                                 <label class="form-label mx-2">Update: </label>
-                                <input type="file" name="image1" class="my-1 ml-1 form-control" />
+                                <input type="file" name="image2" class="my-1 ml-1 form-control" />
                             </div>
 
                         </div>
@@ -223,7 +219,7 @@
 
                     </div>
 
-                    <div class="d-flex my-2">
+                    <div class="d-lg-flex my-2">
 
                         <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
                             <label class="form-label text-center">Image #3 </label>
@@ -238,7 +234,7 @@
                             }
                             <div class="col-8 d-flex justify-content-center align-items-center">
                                 <label class="form-label mx-2">Update: </label>
-                                <input type="file" name="image1" class="my-1 ml-1 form-control" />
+                                <input type="file" name="image3" class="my-1 ml-1 form-control" />
                             </div>
 
                         </div>
@@ -256,7 +252,7 @@
                             }
                             <div class="col-8 d-flex justify-content-center align-items-center">
                                 <label class="form-label mx-2">Update: </label>
-                                <input type="file" name="image1" class="my-1 ml-1 form-control" />
+                                <input type="file" name="last" class="my-1 ml-1 form-control" />
                             </div>
 
                         </div>
@@ -266,22 +262,22 @@
 
 
 
+                    <div class=" col my-5 d-flex justify-content-center">
 
+                        <div class="form-group mt-2 col-6">
+                            <input type="submit" value="Update Photos" class="btn btn-danger col-12" onclick="return formComplete()" />
+                        </div>
 
-
-
-                </div>
-
-                <div class=" col-md-4 mt-4">
-
-                    <div class="form-group mt-2">
-                        <input type="submit" value="Update Info" class="btn btn-primary col-12" onclick="return formComplete()" />
                     </div>
 
-                </div>
 
 
                 </div>
+
+                
+
+
+            </div>
                 
 
         </form>

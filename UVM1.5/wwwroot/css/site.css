@@ -27,7 +27,12 @@ body {
 }
 
 .img-thumbnail {
-    height: 100px;
+
+
+
+
+
+    height: 120px;
 }
 
 .edit-img {
@@ -47,11 +52,15 @@ input::-webkit-inner-spin-button {
     font-size: 2rem;
 }
 
-/*#item-photos {
-    display: none;
-}
+@media (max-width: 1300px) {
 
-#item-photos * {
-    display: none;
-}*/
+  .list-price{
+      display: none;
+  }
+
+    .img-thumbnail {
+        height: 75px;
+    }
+
+}
 

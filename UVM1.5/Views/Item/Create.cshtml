@@ -156,7 +156,7 @@
             <div class=" col-md-4 mt-4">
 
                 <div class="form-group mt-2">
-                    <input type="submit" value="Create Listing" class="btn btn-primary col-12" onclick="return formComplete()"  />
+                    <input type="submit" value="Create Listing" class="btn btn-danger col-12" onclick="return formComplete()"  />
                 </div>
 
             </div>
@@ -185,6 +185,9 @@
 
 
     function formComplete(){
+
+        console.log(cost.value);
+        console.log(retail.value);
         if (loc.value == '') {
             alert("Please select a location.")
             return false;
@@ -197,15 +200,15 @@
             alert("Please enter a model.")
             return false;
         }
-        if (cat.value == '') {
+        if (cat.value > 1) {
             alert("Please select a category.")
             return false;
         }
-        if (Retail.value == '') {
+        if (retail.value == '') {
             alert("Please enter a retail amount.")
             return false;
         }
-        if (Cost.value == '') {
+        if (cost.value == '') {
             alert("Please enter a cost amount.")
             return false;
         }
