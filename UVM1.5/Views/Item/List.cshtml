@@ -25,10 +25,10 @@
                 Item
             </th>
 
-            <th class="d-sm-none d-md-block">
+            <th class="list-price">
                 @Html.DisplayNameFor(model => model.Retail)
             </th>
-            <th class="d-sm-none d-md-block">
+            <th class="list-price">
                 @Html.DisplayNameFor(model => model.Cost)
             </th>
 @*          <th>
@@ -50,13 +50,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Location)
             </td>
-            <td>
-                    @if(item.Images[0] == null){
-                        <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
-                    }
-                    else{
-                        <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(item.DisplayIMG)"  />
-                    }
+            <td >
+
+                
+                        @if (item.DisplayIMG == null)
+                        {
+                            <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
+                        }
+                        else
+                        {
+                            <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(item.DisplayIMG)" />
+                        }
+
+                
+                    
                     
                     
                     
@@ -68,10 +75,10 @@
                 @Html.DisplayFor(modelItem => item.Color)
                    
             </td>
-            <td class="d-sm-none d-md-block">
+            <td class="list-price">
                 @Html.DisplayFor(modelItem => item.Retail)
             </td>
-            <td class="d-sm-none d-md-block">
+            <td class="list-price">
                 @Html.DisplayFor(modelItem => item.Cost)
             </td>
 

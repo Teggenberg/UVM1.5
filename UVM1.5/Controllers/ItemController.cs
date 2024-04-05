@@ -159,11 +159,11 @@ namespace UVM1._5.Controllers
 
                 };
 
-                item.Images = DBQuery.GetImages(item.Id);
-                if(item.Images.Count != 0)
+                item.DisplayIMG = DBQuery.GetImage(item.Id)[0];
+                /*if(item.Images.Count != 0)
                 {
                     item.DisplayIMG = item.Images[0];
-                }
+                }*/
                 
                 list.Add(item);
           
