@@ -40,15 +40,15 @@
 
             <div class="d-flex flex-column text-center">
                 <div class="form-group">
-                    <input asp-for="Id" id="id" class="form-control text-center id-header " name="id" style="border: none" readonly="readonly"/>
+                    <input asp-for="Id" id="id" class="form-control text-center id-header " name="id" style="border: none; background-color: white" readonly="readonly"/>
                     <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
                 <h4>@Model.Year @Model.Brand.Name @Model.Model @Model.Color</h4>
             </div>
             
             <div class="form-group my-4 d-flex justify-content-center ">
-                <input value="Info" type="button" class="btn btn-secondary col-3 mx-5" onclick="seeInfo()" />
-                <input  value="Photos" type ="button" class="btn btn-secondary col-3 mx-5" onclick="seePhotos()" />
+                <input id="info" value="Info" type="button" class="btn btn-outline-danger col-3 mx-5" onclick="seeInfo()" />
+                <input id="photos" value="Photos" type ="button" class="btn btn-outline-danger col-3 mx-5" onclick="seePhotos()" />
                 
             </div>
             <hr />
@@ -63,17 +63,17 @@
 
                             <div class="form-group">
                                 <label asp-for="Brand" class="control-label form-label my-0"></label>
-                                <input id="brand" name="b" type="search" list="brandlist" asp-for="Brand.Name" class="form-control" disabled="true" />
+                                <input id="brand" name="b" type="search" list="brandlist" asp-for="Brand.Name" class="form-control"  />
                                 <span asp-validation-for="Brand.Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Model" class="control-label form-label my-0"></label>
-                                <input id="model" asp-for="Model" class="form-control" disabled="true" />
+                                <input id="model" asp-for="Model" class="form-control"  />
                                 <span asp-validation-for="Model" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Color" class="control-label form-label my-0"></label>
-                                <input id="color" asp-for="Color" class="form-control" disabled="true" />
+                                <input id="color" asp-for="Color" class="form-control"  />
                                 <span asp-validation-for="Color" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -83,7 +83,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Category" class="control-label form-label my-0"></label>
-                                <input id="cat" name="c" asp-for="Category.Name" class="form-control" disabled="true" list="cat_options" />
+                                <input id="cat" name="c" asp-for="Category.Name" class="form-control"  list="cat_options" />
                                 <span asp-validation-for="Category.Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -107,14 +107,16 @@
 
                                 <div class="form-group col-4">
                                     <label asp-for="Retail" class="control-label form-label my-0"></label>
-                                    <div class="d-inline-flex">
-                                        <input asp-for="Retail" id="retail" class="form-control text-end" type="number" /><div class="py-2">.99</div>
+                                    <div class="d-inline-flex align-items-center">
+                                        $<input asp-for="Retail" id="retail" class="form-control text-end" type="number" />
                                     </div>
                                     <span asp-validation-for="Retail" class="text-danger"></span>
                                 </div>
                                 <div class="form-group col-4">
                                     <label asp-for="Cost" class="control-label form-label my-0"></label>
-                                    <input asp-for="Cost" type="number" id="cost" class="form-control text-end" />
+                                    <div class="d-inline-flex align-items-center">
+                                        $<input asp-for="Cost" id="cost" class="form-control text-end" type="number" />
+                                    </div>
                                     <span asp-validation-for="Cost" class="text-danger"></span>
                                 </div>
                                 <div class="form-group col-3">
@@ -290,16 +292,25 @@
 
 <script>
     var photos = document.getElementById("item-photos");
-    var info = document.getElementById("item-info")
+    var info = document.getElementById("item-info");
+
+    var photo-btn = document.getElementById("photos");
+    var info-btn = document.getElementById("info");
 
     function seePhotos(){
         photos.style.display = "block";
         info.style.display = "none";
+
+        photo-btn.classList.add("btn-danger");
+        info-btn.classList.remove("btn-danger");
     }
 
     function seeInfo(){
         photos.style.display = "none";
         info.style.display = "block";
+
+        photo-btn.classList.remove("btn-danger");
+        info-btn.classList.add("btn-danger");
     }
 </script>
 

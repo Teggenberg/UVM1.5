@@ -152,15 +152,10 @@ namespace UVM1._5.Controllers
             return itemImages;
         }
 
-        public static List<byte[]?>? GetImage(int? itemId)
+        public static byte[]? GetImage(int? itemId)
         {
-            List<byte[]?>? itemImages = new();
-            for (int i = 0; i < 4; i++)
-            {
-                byte[] image = null;
-                itemImages.Add(image);
-            }
-
+            byte[]? itemImage = null;
+           
             string query = $"select top 1 Item_Image, Position from Item_Image " +
                 $"\r\n where Item_Id = {itemId}" +
                 $"\r\nAnd Item_Image is not null;";
@@ -172,12 +167,12 @@ namespace UVM1._5.Controllers
             {
                 if (dt.Rows[i][0] != null)
                 {
-                    itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1] = (byte[])dt.Rows[i][0];
+                    itemImage =  (byte[])dt.Rows[i][0];
                 }
 
             }
 
-            return itemImages;
+            return itemImage;
         }
 
 
