@@ -32,7 +32,7 @@ body {
 
 
 
-    height: 120px;
+    height: 150px;
 }
 
 .edit-img {
@@ -52,14 +52,14 @@ input::-webkit-inner-spin-button {
     font-size: 2rem;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1000px) {
 
   .list-price{
       display: none;
   }
 
     .img-thumbnail {
-        height: 75px;
+        height: 100px;
     }
 
 }

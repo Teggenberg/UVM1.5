@@ -175,6 +175,19 @@ namespace UVM1._5.Controllers
             return itemImage;
         }
 
+        public static void UpdateItemInfo(Item item)
+        {
+            
+            string query = "Update Item" +
+                $"\r\nSet Brand = {item.Brand.Value}, Model = '{item.Model}', YYYY = '{item.Year}', Color = '{item.Color}', " +
+                $"\r\nCondition = {item.Condition.Value}, Category = {item.Category.Value}, Description = '{item.Description}'," +
+                $"\r\nDetails = '{item.Details}', Cost = {item.Cost}, Retail = {item.Retail}" +
+                $"\r\nWhere Id = {item.Id};";
+
+            Insert(query);
+
+        }
+
 
 
 

@@ -47,8 +47,8 @@
             </div>
             
             <div class="form-group my-4 d-flex justify-content-center ">
-                <input id="info" value="Info" type="button" class="btn btn-outline-danger col-3 mx-5" onclick="seeInfo()" />
-                <input id="photos" value="Photos" type ="button" class="btn btn-outline-danger col-3 mx-5" onclick="seePhotos()" />
+                <input id="info-btn" value="Info" type="button" class="btn btn-danger col-3 mx-5" onclick="seeInfo()" />
+                <input  id="photo-btn" value="Photos" type ="button" class="btn btn-outline-danger col-3 mx-5" onclick="seePhotos()" />
                 
             </div>
             <hr />
@@ -93,7 +93,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Condition" class="control-label form-label my-0"></label>
-                                <select asp-for="Condition.Value" class="form-control" list="condition_options">
+                                <select id="condition" asp-for="Condition.Value" class="form-control" list="condition_options">
                                     <option value="0"></option>
                                     <option value="5">Excellent</option>
                                     <option value="4">Great</option>
@@ -162,7 +162,7 @@
                     <div class=" col my-5 d-flex justify-content-center">
 
                         <div class="form-group mt-2 col-6">
-                            <input  value="Update Info" class="btn btn-danger col-12" onclick="return formComplete()" />
+                            <input  value="Update Info" class="btn btn-danger col-12" onclick="return updateItemInfo()" />
                         </div>
 
                     </div>
@@ -291,26 +291,128 @@
 </div>
 
 <script>
+    //sections
     var photos = document.getElementById("item-photos");
     var info = document.getElementById("item-info");
+    //buttons
+    var photoBtn = document.getElementById("photo-btn");
+    var infoBtn = document.getElementById("info-btn");
+    //input fields
+    var brand = document.getElementById("brand");
+    var model = document.getElementById("model");
+    var cat = document.getElementById("cat");
+    var serial = document.getElementById("serial");
+    var desc = document.getElementById("desc");
+    var color = document.getElementById("color");
+    var year = document.getElementById("year");
+    var details = document.getElementById("details");
+    var det_rend = document.getElementById("details_render");
+    var id = document.getElementById("id");
+    var cond = document.getElementById("condition");
 
-    var photo-btn = document.getElementById("photos");
-    var info-btn = document.getElementById("info");
+    var retail = document.getElementById("retail");
 
+    function formComplete() {
+        
+
+        if (brand.value == '') {
+            alert("Please enter a brand.")
+            return false;
+        }
+        if (model.value == '') {
+            alert("Please enter a model.")
+            return false;
+        }
+        if (cat.value > 1) {
+            alert("Please select a category.")
+            return false;
+        }
+        if (retail.value == '') {
+            alert("Please enter a retail amount.")
+            return false;
+        }
+
+
+        return true;
+    }
+
+    function updateItemInfo(){
+
+        if (!formComplete()) {
+            return false;
+        }
+
+        var _id = id.value;
+        var _brand = brand.value;
+        var _model = model.value;
+        var _cat = cat.value;
+        var _serial = serial.value;
+        var _desc = desc.value;
+        var _color = color.value;
+        var _year = year.value;
+        var _details = details.value;
+        var _retail = retail.value;
+        var _cost = cost.value;
+        var _cond = cond.value;
+        
+
+        console.log(_brand);
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("UpdateItemInfo")",
+            dataType: "json",
+            data: {
+                _id: _id,
+                brnd: _brand,
+                mod: _model,
+                _cat: _cat,
+                _serial: _serial,
+                _color: _color,
+                _year: _year,
+                _desc: _desc,
+                _det: _details,
+                _retail: _retail,
+                _cost: _cost,
+                _cond: _cond
+          
+            },
+            success: function (result) {
+                alert("Item Updated");
+
+
+            },
+            error: function (req, status, err) {
+                console.log(status);
+            }
+
+
+        });
+
+        return false;
+
+
+    }
     function seePhotos(){
         photos.style.display = "block";
         info.style.display = "none";
 
-        photo-btn.classList.add("btn-danger");
-        info-btn.classList.remove("btn-danger");
+        photoBtn.classList.add("btn-danger");
+        infoBtn.classList.remove("btn-danger");
+
+        photoBtn.classList.remove("btn-outline-danger");
+        infoBtn.classList.add("btn-outline-danger");
     }
 
     function seeInfo(){
         photos.style.display = "none";
         info.style.display = "block";
 
-        photo-btn.classList.remove("btn-danger");
-        info-btn.classList.add("btn-danger");
+        photoBtn.classList.remove("btn-danger");
+        infoBtn.classList.add("btn-danger");
+
+        photoBtn.classList.add("btn-outline-danger");
+        infoBtn.classList.remove("btn-outline-danger");
     }
 </script>
 

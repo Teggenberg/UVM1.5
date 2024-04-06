@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UVM1._5.Models.Item>
+﻿@model IEnumerable<UVM1._5.Models.ListVM>
 
 @{
     ViewData["Title"] = "View";
@@ -6,9 +6,7 @@
 
 
 
-<p>
-    <a asp-action="Create">Add New Listing</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -18,7 +16,7 @@
             <th>
                 Store
             </th>
-            <th>
+            <th class="text-center">
 				Image
             </th>
             <th>
@@ -31,28 +29,24 @@
             <th class="list-price">
                 @Html.DisplayNameFor(model => model.Cost)
             </th>
-@*          <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Details)
-            </th> *@
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
+        <tr class="container align-items-center">
+            <td class="py-5">
                 
                 <a asp-action="EditItem" asp-route-id="@item.Id">@item.Id</a>
             </td>
-            <td>
+            <td class="py-5">
                 @Html.DisplayFor(modelItem => item.Location)
             </td>
-            <td >
+            <td>
 
-                
+                <div class="container d-flex justify-content-center ">
+
                         @if (item.DisplayIMG == null)
                         {
                             <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
@@ -62,17 +56,27 @@
                             <img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(item.DisplayIMG)" />
                         }
 
+                </div>
+                        
+
                 
                     
                     
                     
                     
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-                @Html.DisplayFor(modelItem => item.Brand.Name)
-                @Html.DisplayFor(modelItem => item.Model)
-                @Html.DisplayFor(modelItem => item.Color)
+            <td >
+                <div class="d-flex align-items-center py-5">
+                    <div>
+                            @Html.DisplayFor(modelItem => item.Year)
+                            @Html.DisplayFor(modelItem => item.Brand)
+                            @Html.DisplayFor(modelItem => item.Model)
+                            @Html.DisplayFor(modelItem => item.Color)
+
+                    </div>
+                        
+                </div>
+                
                    
             </td>
             <td class="list-price">

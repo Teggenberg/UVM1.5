@@ -135,32 +135,27 @@ namespace UVM1._5.Controllers
 
         public ActionResult List()
         {
-            List<Item?> list = new List<Item?>();
+            List<ListVM?> list = new List<ListVM?>();
             string select = "select * from item\r\njoin Brands on Brand = Brands.Id\r\njoin Category on Category = Category.Id;";
             DataTable items = DBQuery.SelectAll(select);
 
             for(int i = 0; i < items.Rows.Count; i++)
             {
-                Item item = new Item()
+
+
+                ListVM item = new ListVM()
                 {
                     Id = Convert.ToInt32(items.Rows[i][0]),
                     Location = Convert.ToInt32(items.Rows[i][1]),
-                    Brand = new Pair((string?)items.Rows[i][15], Convert.ToInt32(items.Rows[i][2])),
+                    Brand = (string?)items.Rows[i][15],
                     Model = (string?)items.Rows[i][3],
                     Year = (string?)items.Rows[i][4],
                     Color = (string?)items.Rows[i][5],
-                    Condition = new Pair("test", Convert.ToInt32(items.Rows[i][6])),
-                    Category = new Pair((string?)items.Rows[i][17], Convert.ToInt32(items.Rows[i][7])),
-                    Description = (string?)items.Rows[i][8],
-                    Details = (string?)items.Rows[i][9],
+                    Category = (string?)items.Rows[i][17],
                     Cost = (decimal?)items.Rows[i][10],
                     Retail = (decimal?)items.Rows[i][11],
-                    Serial = (string?)items.Rows[i][13]
-
                 };
-
-                item.DisplayIMG = DBQuery.GetImage(item.Id);
-
+                item.DisplayIMG = DBQuery.GetImage(item.Id); 
                 list.Add(item);
           
             }
@@ -194,6 +189,49 @@ namespace UVM1._5.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public void UpdateItemInfo(int _id, string brnd, string mod, string _cat, string _serial, string _color, string _year, string _desc, string _det, decimal _retail, decimal _cost, int _cond )
+        {
+            List<Pair> brands = DBQuery.GetOptions("Brands");
+            List<Pair> cats = DBQuery.GetOptions("Category");
+
+            Item item = new Item()
+            {
+                Id = _id,
+                Brand = new Pair(brnd),
+                Model = mod,
+                Category = new Pair(_cat),
+                Serial = _serial,
+                Color = _color,
+                Year = _year,
+                Description = _desc,
+                Details = _det,
+                Retail = _retail,
+                Cost = _cost,
+                Condition = new Pair("", _cond)
+
+            };
+
+            item.Brand.Value = CheckName(item.Brand.Name, brands);
+            item.Category.Value = CheckName(item.Category.Name, cats);
+
+
+            if (item.Brand.Value == -1)
+            {
+                item.Brand.Value = DBQuery.Insert
+                    ($"insert into Brands (Brand_Name) \nOutput Inserted.Id \nValues ('{brnd}');");
+            }
+
+            if (item.Category.Value == -1)
+            {
+                item.Category.Value = 26;
+            }
+            System.Diagnostics.Debug.WriteLine(_id.ToString() , "testing ", brnd, mod);
+            item.Description = CorrectPunctuation(item.Description);    
+            DBQuery.UpdateItemInfo(item);
+
         }
 
         // GET: ItemController/Delete/5
