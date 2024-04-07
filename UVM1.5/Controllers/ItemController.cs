@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Data;
 using System.Drawing;
+using System.IO;
 
 namespace UVM1._5.Controllers
 {
@@ -368,6 +369,17 @@ namespace UVM1._5.Controllers
                 item.Images = DBQuery.GetImages(item.Id);
 
             }
+
+            /*OpenAIController ai = new OpenAIController();
+            string itemDesc = $"This photos shows a {item.Brand.Name} {item.Model} {item.Category.Name} ";
+
+            foreach(var img in item.Images)
+            {
+                ai.MatchImageToDescriptionAsync(img, itemDesc);
+            }*/
+
+            TempFile(item.Images[0], "");
+
             return item;
         }
 
@@ -383,6 +395,25 @@ namespace UVM1._5.Controllers
             }
 
 
+        }
+
+        public void TempFile(byte[] img, string path)
+        {
+            byte[] filedata = img;
+            string extension = "jpg"; // "pdf", etc
+
+
+            //string filename = System.IO.Path.GetTempFileName() + "." + extension; // Makes something like "C:\Temp\blah.tmp.pdf"
+            string filename = "wwwroot/images/temp.jpg";
+            System.IO.File.WriteAllBytes(filename,filedata);
+
+            /*var process = Process.Start(filename);
+            // Clean up our temporary file...
+            process.Exited += (s, e) => System.IO.File.Delete(filename);*/
+            System.Diagnostics.Debug.WriteLine(filename);
+            //System.IO.File.Delete(filename);
+            System.Diagnostics.Debug.WriteLine("\n\n\nplease work");
+            //System.IO.File.Delete(filename);
         }
     }
 }

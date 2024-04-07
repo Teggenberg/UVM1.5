@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OpenAI_API;
 using OpenAI_API.Completions;
+using System;
+using System.Net.Http.Headers;
+using System.Text;
 using UVM1._5.Models;
 
 namespace UVM1._5.Controllers
@@ -12,6 +15,7 @@ namespace UVM1._5.Controllers
     public class OpenAIController : ControllerBase
     {
         private string _key = "";
+        static readonly HttpClient client = new HttpClient();
 
         public OpenAIController()
         {
@@ -112,6 +116,59 @@ namespace UVM1._5.Controllers
 
         }
 
+        /*static async Task Main()
+        {
+            // Your OpenAI API key
+            string apiKey = "your_api_key_here";
+            // The image you want to analyze
+            byte[] imageBytes = File.ReadAllBytes("path_to_your_image.jpg");
+            // The description to match
+            string description = "A description of the image";
+
+            await MatchImageToDescriptionAsync(apiKey, imageBytes, description);
+        }*/
+
+        public async Task MatchImageToDescriptionAsync(byte[] imageBytes, string description)
+        {
+            try
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this._key);
+
+                var requestData = new
+                {
+                    image = Convert.ToBase64String(imageBytes),
+                    descriptions = new string[] { description }
+                };
+
+                string json = System.Text.Json.JsonSerializer.Serialize(requestData);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PostAsync("https://api.openai.com/v1/chat/completions", content);
+
+                response.EnsureSuccessStatusCode();
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine(responseBody);
+            }
+            catch (HttpRequestException e)
+            {
+                System.Diagnostics.Debug.WriteLine("\nException Caught!");
+                System.Diagnostics.Debug.WriteLine("Message :{0} ", e.Message);
+            }
+        }
+
+       /* public async Task<string> GPTVision(string msg, string path)
+        {
+            OpenAIAPI openai = new OpenAIAPI(_key);
+
+            var response = openai.Chat.CreateChatCompletionAsync("gpt-4-vision-preview");
+
+
+
+
+
+        }
+*/
     }
 }
 
