@@ -7,6 +7,7 @@ using System;
 using System.Net.Http.Headers;
 using System.Text;
 using UVM1._5.Models;
+using Python.Runtime;
 
 namespace UVM1._5.Controllers
 {
@@ -157,18 +158,23 @@ namespace UVM1._5.Controllers
             }
         }
 
-       /* public async Task<string> GPTVision(string msg, string path)
+        public void GPTVision()
         {
-            OpenAIAPI openai = new OpenAIAPI(_key);
+            Runtime.PythonDLL = @"C:\Users\timeg\UVM1.5\UVM1.5\UVM1.5\python39.dll";
+            PythonEngine.Initialize();
+            using (Py.GIL())
+            {
+                var pythonScript = Py.Import("PythonScript");
+                pythonScript.InvokeMethod("say_hello");
+            }
 
-            var response = openai.Chat.CreateChatCompletionAsync("gpt-4-vision-preview");
 
 
 
 
 
         }
-*/
+
     }
 }
 
