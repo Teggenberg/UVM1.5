@@ -1,0 +1,426 @@
+﻿@model UVM1._5.Models.Item
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+<datalist id="brandlist">
+
+    @foreach(var brand in @ViewBag.brands){
+
+        var name = brand;
+        <option value="@name.Name"></option>
+    }
+
+</datalist>
+
+<datalist id="locationlist">
+
+    @foreach (var loc in @ViewBag.locations)
+    {
+
+        <option value="@loc.Value">@loc.Name</option>
+    }
+
+</datalist>
+
+<datalist id="cat_options">
+    
+    @foreach (var cat in @ViewBag.categories)
+    {
+
+        <option value="@cat.Name"></option>
+    }
+    
+
+</datalist>
+
+
+<h4>Used Intake</h4>
+<hr />
+<div class="">
+    <div>
+        <form asp-action="createItem" class="row d-inline-flex col-12" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-lg-4">
+
+                <div class="form-group">
+                    <label asp-for="Location" class="control-label form-label my-0"></label>
+                    <input asp-for="Location" id="location" class="form-control" list="locationlist" />
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Brand" class="control-label form-label my-0"></label>
+                    <input id="brand" name="b" type="search" list="brandlist" asp-for="Brand.Name" class="form-control" disabled="true" />
+                    <span asp-validation-for="Brand.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model" class="control-label form-label my-0"></label>
+                    <input id="model" asp-for="Model" class="form-control" disabled="true" />
+                    <span asp-validation-for="Model" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Color" class="control-label form-label my-0"></label>
+                    <input id="color" asp-for="Color" class="form-control" disabled="true" />
+                    <span asp-validation-for="Color" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Year" class="control-label form-label my-0"></label>
+                    <input id="year" asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Category" class="control-label form-label my-0"></label>
+                    <input id="cat" name="c" asp-for="Category.Name" class="form-control" disabled="true" list="cat_options" />
+                    <span asp-validation-for="Category.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Serial" class="control-label form-label my-0"></label>
+                    <input id="serial" asp-for="Serial" class="form-control" onblur="parseSerial()" />
+                    <span asp-validation-for="Serial" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Condition" class="control-label form-label my-0"></label>
+                    <select asp-for="Condition.Value" class="form-control" list="condition_options">
+                        <option value="0"></option>
+                        <option value="5">Excellent</option>
+                        <option value="4">Great</option>
+                        <option value="3">Good</option>
+                        <option value="2">Fair</option>
+
+                    </select>
+                    <span asp-validation-for="Condition.Value" class="text-danger"></span>
+                </div>
+                <div class="d-inline-flex justify-content-between">
+
+                    <div class="form-group col-4">
+                        <label asp-for="Retail" class="control-label form-label my-0"></label>
+                        <div class="d-inline-flex">
+                            <input asp-for="Retail" id="retail" class="form-control text-end" type="number" /><div class="py-2">.99</div>
+                        </div>
+                        <span asp-validation-for="Retail" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-4">
+                        <label asp-for="Cost" class="control-label form-label my-0"></label>
+                        <input asp-for="Cost" type ="number" id="cost" class="form-control text-end" />
+                        <span asp-validation-for="Cost" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-3">
+                        <label class="control-label form-label my-0">GM</label>
+                        <div class="d-inline-flex">
+                            <input id="gm" class="form-control text-end" readonly="readonly" /><div class="py-2">%</div>
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+
+            </div>
+
+            <div class="col-lg-8">
+                
+
+                    <div class="form-group">
+                        <label class="control-label form-label my-0">Listing Title Preview:</label>
+                        <input id="title" class="form-control" />
+
+                    </div>
+
+                    <div class="col">
+                        <label asp-for="Description" class="control-label form-label my-2"></label>
+                        <textarea id="desc" asp-for="Description" rows="6" class="col-12 form-control" name="dsc" >
+                            @Model.Description
+                        </textarea>
+
+                    </div>
+
+                    <div>
+                        <label asp-for="Details" class="control-label form-label my-2"></label>
+                        <textarea id="details" name="det" asp-for="Details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex:   upgraded tuners, buckle rash, refinished"></textarea>
+                        <label class="text-center form-label my-2">Details Preview:</label>
+                        <p id="details_render">
+
+                        </p>
+
+                    </div>
+
+                
+
+
+            </div>
+            
+            <div class=" col-md-4 mt-4">
+
+                <div class="form-group mt-2">
+                    <input type="submit" value="Create Listing" class="btn btn-danger col-12" onclick="return formComplete()"  />
+                </div>
+
+            </div>
+            
+        </form>
+        
+    </div>
+    
+</div>
+
+<script>
+
+    var loc = document.getElementById("location");
+    var brand = document.getElementById("brand");
+    var model = document.getElementById("model");
+    var cat = document.getElementById("cat");
+    var serial = document.getElementById("serial");
+    var desc = document.getElementById("desc");
+    var color = document.getElementById("color");
+    var year = document.getElementById("year");
+    var details = document.getElementById("details");
+    var det_rend = document.getElementById("details_render");
+    var title = document.getElementById("title");
+    var cost = document.getElementById("cost");
+    var retail = document.getElementById("retail");
+
+
+    function formComplete(){
+
+        console.log(cost.value);
+        console.log(retail.value);
+        if (loc.value == '') {
+            alert("Please select a location.")
+            return false;
+        }
+        if (brand.value == '') {
+            alert("Please enter a brand.")
+            return false;
+        }
+        if (model.value == '') {
+            alert("Please enter a model.")
+            return false;
+        }
+        if (cat.value > 1) {
+            alert("Please select a category.")
+            return false;
+        }
+        if (retail.value == '') {
+            alert("Please enter a retail amount.")
+            return false;
+        }
+        if (cost.value == '') {
+            alert("Please enter a cost amount.")
+            return false;
+        }
+        
+        
+        return true;
+    }
+
+    loc.addEventListener("change", (e) => {
+        brand.disabled = false;
+
+    });
+
+    brand.addEventListener("change", (e) => {
+        if (brand.value != "") {
+            model.disabled = false;
+            title.value = year.value + ' ' + brand.value + ' ' + model.value + ' ' + color.value + ' ' + cat.value;
+        }
+        else {
+            model.disabled = true;
+            model.value = "";
+        }
+    });
+
+    model.addEventListener("change", (e) => {
+        if (model.value != "") {
+            cat.disabled = false;
+            color.disabled = false;
+            title.value = year.value + ' ' + brand.value + ' ' + model.value + ' ' + color.value + ' ' + cat.value;
+
+            var brnd = brand.value;
+            var mod = model.value;
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetCat")",
+                dataType: "json",
+                data: {
+                    brnd: brnd,
+                    mod: mod
+                },
+                success: function (response) {
+                    //alert("Genrating Description");
+                    console.log(response);
+                    cat.value = response.value
+
+                },
+                error: function (req, status, err) {
+                    console.log(status);
+                }
+
+
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GenerateDesc")",
+                dataType: "json",
+                data: {
+                    brnd: brnd,
+                    mod: mod
+                },
+                success: function (response) {
+                    //alert("Genrating Description");
+                    console.log(response);
+                    desc.value = response.value
+                    
+                },
+                error: function (req, status, err) {
+                    console.log(status);
+                }
+
+
+            });
+
+        }
+        else {
+            cat.disabled = true;
+            color.disabled = true;
+            cat.value = "";
+            color.value = "";
+        }
+    });
+
+    
+
+    cat.addEventListener("change", (e) => {
+        if (cat.value != "") {
+            serial.disabled = false;
+            title.value = year.value + ' ' + brand.value + ' ' + model.value + ' ' + color.value + ' ' + cat.value;
+            
+
+
+        }
+        else {
+            serial.disabled = true;
+            serial.value = "";
+        }
+    });
+
+    year.addEventListener("change", (e) => {
+
+        var brnd = brand.value;
+        var mod = model.value;
+        var yy = year.value;
+        title.value = year.value + ' ' + brand.value + ' ' + model.value + ' ' + color.value + ' ' + cat.value;
+
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GenerateDesc")",
+            dataType: "json",
+            data: {
+                brnd: brnd,
+                mod: mod,
+                yy: yy
+            },
+            success: function (response) {
+                //alert("Genrating Description");
+                console.log(response);
+                desc.value = response.value
+
+            },
+            error: function (req, status, err) {
+                console.log(status);
+            }
+
+
+        });
+
+    });
+
+    document.getElementById("cost").addEventListener("change", (e) => {
+        var gm = document.getElementById("gm");
+        
+        if (retail.value > 0) {
+            var margin = (1 - (cost.value / retail.value )) * 100;
+            gm.value = margin.toFixed(2);
+            console.log(gm);
+        }
+        
+    })
+
+    details.addEventListener("input", (e) => {
+        //det_rend.innerText = formatDetails(details.innerText);
+        
+        var det = details.value;
+        det_rend.innerText = formatDetails(det);
+        console.log(det);
+    });
+
+    function formatDetails(text) {
+        var det = '';
+        var detailsArr = text.split(',');
+        console.log(detailsArr);
+        for (let i = 0; i < detailsArr.length; i++) {
+            
+            det = det + '- ' + detailsArr[i] + '\n';
+        }
+        return det;
+    }
+
+
+
+    function parseSerial() {
+        var brand = document.getElementById('brand');
+        var serial = document.getElementById('serial');
+
+        console.log(brand.value);
+        console.log(serial.value);
+
+        switch (brand.value) {
+            case 'PRS':
+                if (isLetter(serial.value[0])) {
+                    alert("this serialnumber is consistant with an SE model, please verify it hasbeen identified accordingly.");
+                }
+                else if (serial.value.includes('S') || serial.value.includes('s')) {
+                    alert("this serial number is consistant with an S2 model, please verify that it has been identified accordingly.")
+                }
+                // code block
+                break;
+            case 'G&L':
+                // code block
+                break;
+            case 'Fender':
+                if (serial.value.includes('M') || serial.value.includes('m')) {
+                    alert("This serial is consistant with a Made in Mexico model. Please ensure item was identified accordingly");
+                }
+            default:
+            // code block
+        }
+    }
+
+    
+
+    function isLetter(s) {
+        return s.match(/[a-z]/i);
+    }
+
+    function sendForm() {
+
+        var b = brand.value;
+        var c = cat.value;
+        var dsc = desc.innerText;
+        var det = details.innerText;
+
+        
+    }
+</script>
+
+
+@*
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}*@
+

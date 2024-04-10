@@ -1,0 +1,424 @@
+﻿@model UVM1._5.Models.Item
+
+@{
+    ViewData["Title"] = "EditItem";
+}
+<datalist id="brandlist">
+
+    @foreach (var brand in @ViewBag.brands)
+    {
+        var name = brand;
+        <option value="@name.Name"></option>
+    }
+
+</datalist>
+
+<datalist id="locationlist">
+
+    @foreach (var loc in @ViewBag.locations)
+    {
+        <option value="@loc.Value">@loc.Name</option>
+    }
+
+</datalist>
+
+<datalist id="cat_options">
+
+    @foreach (var cat in @ViewBag.categories)
+    {
+
+        <option value="@cat.Name"></option>
+    }
+
+
+</datalist>
+
+<div class="">
+    <div>
+        <form asp-action="UploadPhotos" enctype="multipart/form-data" AllowMultiple="true" runat="server"  class="row d-inline-flex col-12">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="d-flex flex-column text-center">
+                <div class="form-group">
+                    <input asp-for="Id" id="id" class="form-control text-center id-header " name="id" style="border: none; background-color: white" readonly="readonly"/>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <h4>@Model.Year @Model.Brand.Name @Model.Model @Model.Color</h4>
+            </div>
+            
+            <div class="form-group my-4 d-flex justify-content-center ">
+                <input id="info-btn" value="Info" type="button" class="btn btn-danger col-3 mx-5" onclick="seeInfo()" />
+                <input  id="photo-btn" value="Photos" type ="button" class="btn btn-outline-danger col-3 mx-5" onclick="seePhotos()" />
+                
+            </div>
+            <hr />
+            <div >
+
+                
+
+                <div id="item-info" >
+                    <div class="row d-inline-flex col-12">
+
+                        <div class="col-lg-4">
+
+                            <div class="form-group">
+                                <label asp-for="Brand" class="control-label form-label my-0"></label>
+                                <input id="brand" name="b" type="search" list="brandlist" asp-for="Brand.Name" class="form-control"  />
+                                <span asp-validation-for="Brand.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Model" class="control-label form-label my-0"></label>
+                                <input id="model" asp-for="Model" class="form-control"  />
+                                <span asp-validation-for="Model" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Color" class="control-label form-label my-0"></label>
+                                <input id="color" asp-for="Color" class="form-control"  />
+                                <span asp-validation-for="Color" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Year" class="control-label form-label my-0"></label>
+                                <input id="year" asp-for="Year" class="form-control" />
+                                <span asp-validation-for="Year" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Category" class="control-label form-label my-0"></label>
+                                <input id="cat" name="c" asp-for="Category.Name" class="form-control"  list="cat_options" />
+                                <span asp-validation-for="Category.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Serial" class="control-label form-label my-0"></label>
+                                <input id="serial" asp-for="Serial" class="form-control" onblur="parseSerial()" />
+                                <span asp-validation-for="Serial" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Condition" class="control-label form-label my-0"></label>
+                                <select id="condition" asp-for="Condition.Value" class="form-control" list="condition_options">
+                                    <option value="0"></option>
+                                    <option value="5">Excellent</option>
+                                    <option value="4">Great</option>
+                                    <option value="3">Good</option>
+                                    <option value="2">Fair</option>
+
+                                </select>
+                                <span asp-validation-for="Condition.Value" class="text-danger"></span>
+                            </div>
+                            <div class="d-inline-flex justify-content-between">
+
+                                <div class="form-group col-4">
+                                    <label asp-for="Retail" class="control-label form-label my-0"></label>
+                                    <div class="d-inline-flex align-items-center">
+                                        $<input asp-for="Retail" id="retail" class="form-control text-end" type="number" />
+                                    </div>
+                                    <span asp-validation-for="Retail" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label asp-for="Cost" class="control-label form-label my-0"></label>
+                                    <div class="d-inline-flex align-items-center">
+                                        $<input asp-for="Cost" id="cost" class="form-control text-end" type="number" />
+                                    </div>
+                                    <span asp-validation-for="Cost" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-3">
+                                    <label class="control-label form-label my-0">GM</label>
+                                    <div class="d-inline-flex">
+                                        <input id="gm" class="form-control text-end" readonly="readonly" /><div class="py-2">%</div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-lg-8">
+
+
+
+                            <div class="col">
+                                <label asp-for="Description" class="control-label form-label my-2"></label>
+                                <textarea id="desc" asp-for="Description" rows="6" class="col-12 form-control" name="dsc">
+                                    @Model.Description
+                                </textarea>
+
+                            </div>
+
+                            <div>
+                                <label asp-for="Details" class="control-label form-label my-2"></label>
+                                <textarea id="details" name="det" asp-for="Details" class="col-12 form-control" placeholder="Enter unique details separated by commas. Ex:   upgraded tuners, buckle rash, refinished"></textarea>
+                                <label class="text-center form-label my-2">Details Preview:</label>
+                                <p id="details_render">
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    
+                    <div class=" col my-5 d-flex justify-content-center">
+
+                        <div class="form-group mt-2 col-6">
+                            <input  value="Update Info" class="btn btn-danger col-12" onclick="return updateItemInfo()" />
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                
+                
+                <div id="item-photos">
+
+                    <div class="my-2 d-lg-flex ">
+
+
+                        <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
+                            <label class="form-label text-center">Image #1 </label>
+                            @if (Model.Images[0] != null)
+                            {
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" />
+                                
+                            }
+                            else
+                            {
+                                <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
+                            }
+                            <div class="col-8 d-flex justify-content-center align-items-center">
+                                <label class="form-label mx-2">Update: </label>
+                                <input type="file" name="image1" class="my-1 ml-1 form-control" />
+                            </div>
+
+                        </div>
+
+                        
+
+
+
+                        <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
+                            <label class="form-label text-center">Image #2 </label>
+                            @if (Model.Images[1] != null)
+                            {
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[1])" />
+
+                            }
+                            else
+                            {
+                                <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
+                            }
+                            <div class="col-8 d-flex justify-content-center align-items-center">
+                                <label class="form-label mx-2">Update: </label>
+                                <input type="file" name="image2" class="my-1 ml-1 form-control" />
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="d-lg-flex my-2">
+
+                        <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
+                            <label class="form-label text-center">Image #3 </label>
+                            @if (Model.Images[2] != null)
+                            {
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[2])" />
+
+                            }
+                            else
+                            {
+                                <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
+                            }
+                            <div class="col-8 d-flex justify-content-center align-items-center">
+                                <label class="form-label mx-2">Update: </label>
+                                <input type="file" name="image3" class="my-1 ml-1 form-control" />
+                            </div>
+
+                        </div>
+
+                        <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
+                            <label class="form-label text-center">Image #4 </label>
+                            @if (Model.Images[3] != null)
+                            {
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3])" />
+
+                            }
+                            else
+                            {
+                                <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
+                            }
+                            <div class="col-8 d-flex justify-content-center align-items-center">
+                                <label class="form-label mx-2">Update: </label>
+                                <input type="file" name="last" class="my-1 ml-1 form-control" />
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class=" col my-5 d-flex justify-content-center">
+
+                        <div class="form-group mt-2 col-6">
+                            <input type="submit" value="Update Photos" class="btn btn-danger col-12" onclick="return formComplete()" />
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+                
+
+
+            </div>
+                
+
+        </form>
+
+        
+
+    </div>
+
+</div>
+
+<script>
+    //sections
+    var photos = document.getElementById("item-photos");
+    var info = document.getElementById("item-info");
+    //buttons
+    var photoBtn = document.getElementById("photo-btn");
+    var infoBtn = document.getElementById("info-btn");
+    //input fields
+    var brand = document.getElementById("brand");
+    var model = document.getElementById("model");
+    var cat = document.getElementById("cat");
+    var serial = document.getElementById("serial");
+    var desc = document.getElementById("desc");
+    var color = document.getElementById("color");
+    var year = document.getElementById("year");
+    var details = document.getElementById("details");
+    var det_rend = document.getElementById("details_render");
+    var id = document.getElementById("id");
+    var cond = document.getElementById("condition");
+
+    var retail = document.getElementById("retail");
+
+    function formComplete() {
+        
+
+        if (brand.value == '') {
+            alert("Please enter a brand.")
+            return false;
+        }
+        if (model.value == '') {
+            alert("Please enter a model.")
+            return false;
+        }
+        if (cat.value > 1) {
+            alert("Please select a category.")
+            return false;
+        }
+        if (retail.value == '') {
+            alert("Please enter a retail amount.")
+            return false;
+        }
+
+
+        return true;
+    }
+
+    function updateItemInfo(){
+
+        if (!formComplete()) {
+            return false;
+        }
+
+        var _id = id.value;
+        var _brand = brand.value;
+        var _model = model.value;
+        var _cat = cat.value;
+        var _serial = serial.value;
+        var _desc = desc.value;
+        var _color = color.value;
+        var _year = year.value;
+        var _details = details.value;
+        var _retail = retail.value;
+        var _cost = cost.value;
+        var _cond = cond.value;
+        
+
+        console.log(_brand);
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("UpdateItemInfo")",
+            dataType: "json",
+            data: {
+                _id: _id,
+                brnd: _brand,
+                mod: _model,
+                _cat: _cat,
+                _serial: _serial,
+                _color: _color,
+                _year: _year,
+                _desc: _desc,
+                _det: _details,
+                _retail: _retail,
+                _cost: _cost,
+                _cond: _cond
+          
+            },
+            success: function () {
+                alert("Item Updated");
+
+
+            },
+            error: function (req, status, err) {
+                console.log(status);
+            }
+
+
+        });
+
+        alert("Item Info has been updated")
+
+        return false;
+
+
+    }
+    function seePhotos(){
+        photos.style.display = "block";
+        info.style.display = "none";
+
+        photoBtn.classList.add("btn-danger");
+        infoBtn.classList.remove("btn-danger");
+
+        photoBtn.classList.remove("btn-outline-danger");
+        infoBtn.classList.add("btn-outline-danger");
+    }
+
+    function seeInfo(){
+        photos.style.display = "none";
+        info.style.display = "block";
+
+        photoBtn.classList.remove("btn-danger");
+        infoBtn.classList.add("btn-danger");
+
+        photoBtn.classList.add("btn-outline-danger");
+        infoBtn.classList.remove("btn-outline-danger");
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+}

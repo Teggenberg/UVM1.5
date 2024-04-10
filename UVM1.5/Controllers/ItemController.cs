@@ -174,6 +174,10 @@ namespace UVM1._5.Controllers
 
             Item item = GetItem(id);
 
+            OpenAIController ai = new OpenAIController();
+            string prompt = $" Does this photo show  a {item.Brand.Name} {item.Model} {item.Category.Name}. Please respond with yes or no.";
+            ai.CheckImage(prompt, "https://uvmprototype.com/Images/temp.jpg");
+
             return View(item);
         }
 
@@ -233,6 +237,49 @@ namespace UVM1._5.Controllers
             item.Description = CorrectPunctuation(item.Description);    
             DBQuery.UpdateItemInfo(item);
 
+        }
+
+        public ActionResult WebList()
+        {
+            List<ListVM?> list = new List<ListVM?>();
+            string select = "select * from item\r\njoin Brands on Brand = Brands.Id\r\njoin Category on Category = Category.Id;";
+            DataTable items = DBQuery.SelectAll(select);
+
+            for (int i = 0; i < items.Rows.Count; i++)
+            {
+
+
+                ListVM item = new ListVM()
+                {
+                    Id = Convert.ToInt32(items.Rows[i][0]),
+                    Location = Convert.ToInt32(items.Rows[i][1]),
+                    Brand = (string?)items.Rows[i][15],
+                    Model = (string?)items.Rows[i][3],
+                    Year = (string?)items.Rows[i][4],
+                    Color = (string?)items.Rows[i][5],
+                    Category = (string?)items.Rows[i][17],
+                    Cost = (decimal?)items.Rows[i][10],
+                    Retail = (decimal?)items.Rows[i][11],
+                };
+                item.DisplayIMG = DBQuery.GetImage(item.Id);
+                list.Add(item);
+
+            }
+            return View(list);
+        }
+
+        // GET: ItemController/Edit/5
+        public ActionResult WebView(int id)
+        {
+
+
+          
+
+            Item item = GetItem(id);
+
+            
+
+            return View(item);
         }
 
         // GET: ItemController/Delete/5
@@ -370,8 +417,8 @@ namespace UVM1._5.Controllers
 
             }
 
-            OpenAIController ai = new OpenAIController();
-            ai.GPTVision();
+            /*OpenAIController ai = new OpenAIController();
+            ai.GPTVision();*/
 
             TempFile(item.Images[0], "");
 

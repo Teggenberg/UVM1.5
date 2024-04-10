@@ -8,6 +8,12 @@ using System.Net.Http.Headers;
 using System.Text;
 using UVM1._5.Models;
 using Python.Runtime;
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace UVM1._5.Controllers
 {
@@ -174,6 +180,52 @@ namespace UVM1._5.Controllers
 
 
         }
+
+        public async Task CheckImage(string imgUrl, string prompt)
+        {
+            string endPoint = "https://api.openai.com/v1/chat/completions";
+            HttpClient client = new HttpClient();
+            var request = new VisionRequest( imgUrl, prompt);
+
+            try
+            {
+                /*client.BaseAddress = new Uri(endPoint);
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _key);
+
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+                client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+                
+*/
+                string json = JsonSerializer.Serialize(request);
+                var requestContent = new StringContent(json, Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_key}");
+
+                var response = await client.PostAsync(endPoint, requestContent);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                VisionResponse vResponse = new VisionResponse();
+                vResponse = JsonSerializer.Deserialize<VisionResponse>(responseBody);
+                int i = 0;
+
+                string answer = vResponse.choices[0].message.content;
+
+
+
+            }
+            catch(Exception ex)
+            {
+                var message = ex.Message;
+                var extest = "";
+
+            }
+            
+
+            var test = "";
+
+
+
+        }  
 
     }
 }
