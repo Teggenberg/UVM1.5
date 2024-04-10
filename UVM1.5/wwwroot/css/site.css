@@ -52,6 +52,15 @@ input::-webkit-inner-spin-button {
     font-size: 2rem;
 }
 
+.small-font {
+    font-size: .9rem;
+}
+
+.small-font-bold {
+    font-size: .9rem;
+    font-weight: 700;
+}
+
 @media (max-width: 1000px) {
 
   .list-price{
