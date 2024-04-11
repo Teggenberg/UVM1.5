@@ -52,6 +52,11 @@ input::-webkit-inner-spin-button {
     font-size: 2rem;
 }
 
+.item-info {
+    padding-left: 25px;
+    border-left: 1px solid #c4bdbd;
+}
+
 .small-font {
     font-size: .9rem;
 }
@@ -64,6 +69,44 @@ input::-webkit-inner-spin-button {
 #contact {
     border: 1px solid #808080;
     box-shadow: -2px 2px 5px #c4bdbd;
+}
+
+.contact-btn{
+    color: red;
+    border: 2px solid red;
+    border-radius: 5px;
+    width: 45%
+}
+
+#main-img {
+    /*width: 50%;*/
+    max-width: 400px;
+}
+
+.web-thumb {
+    max-height: 62px;
+    max-width: 62px;
+}
+
+.thumb-border {
+    height: 70px;
+    width: 70px;
+    border: 1px solid #c4bdbd;
+    border-radius: 5px;
+}
+
+.arrow-btn {
+    padding: 0;
+    font-size: 2rem;
+    
+}
+
+.btn-border {
+    padding: 0;
+    width: 46px;
+    height: 46px;
+    border: 1px solid black;
+    border-radius: 23px;
 }
 
 @media (max-width: 1000px) {

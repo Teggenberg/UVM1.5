@@ -1,29 +1,71 @@
 ﻿@model UVM1._5.Models.Item
 
-<div class="p-3">
-	<did class="d-flex">
-		<div class="col-xl-8">
-			<div>
-				<img class="img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[1])" />
-				<img />
-				<img />
-				<img />
+<div class="">
+	<did class="row d-inline-flex">
+		<div class="col col-xl-8">
+
+			<div id="photo-view">
+				<div id="q-img-cont" class="container d-flex justify-content-between mx-1">
+
+					
+						<button class="btn arrow-btn left-arrow" onclick="return scrollright()">
+							<img src="~/images/leftArrow.png" class="btn-border"/>
+							
+						</button>
+
+						<img id="main-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" onclick="enlarge(this);" />
+
+						<button class="btn arrow-btn right-arrow" onclick="return scrollleft()">
+							
+							<img src="~/images/rightArrow.png" class="btn-border"/>
+
+						</button>
+
+				</div>
+				
+			</div>
+			<div class="d-flex justify-content-center my-3">
+				<div class="thumb-border mx-1 d-flex justify-content-center align-items-center">
+					<img class="web-thumb" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" />
+				</div>
+				<div class="thumb-border mx-1 d-flex justify-content-center align-items-center">
+					<img class="web-thumb " src="data:image;base64,@System.Convert.ToBase64String(Model.Images[1])" />
+				</div>
+				<div class="thumb-border mx-1 d-flex justify-content-center align-items-center">
+					<img class="web-thumb " src="data:image;base64,@System.Convert.ToBase64String(Model.Images[2])" />
+				</div>
+				<div class="thumb-border mx-1 d-flex justify-content-center align-items-center">
+					<img class="web-thumb" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3])" />
+				</div>
+				
+				
+				
+				
 			</div>
 
 		</div>
-		<div class="col-xl-4">
+		<div class="col col-xl-4 item-info ">
 			<h3 class="pb-0">@Model.Year @Model.Brand.Name @Model.Model @Model.Category.Name</h3>
 			<div class="d-flex small-font">
 				<div class="mr-3 pt-0">
-					item #:@Model.Id
+					Item #:@Model.Id
 				</div>
 				<div class="mx-3">
 					POS #:@Model.Id
 				</div>
 			</div>
-			<div id="contact" class="p-1">
+			<div id="contact" class="px-3 py-2 my-4">
 				<p class="bold">Contact or Visit Us for More Details </p>
-
+				<p class="">Every used item is unique—we can help ensure this gear is right for you</p>
+				<p>Item Location: <span style="color: red">@Model.Location</span></p>
+				<div class="d-flex text-center mb-2">
+					<div class="contact-btn bold px-2 py-1 ">
+						(555) 555-5555
+					</div>
+					<div class="contact-btn bold px-2 py-1 mx-2">
+						Message Us
+					</div>
+				</div>
 			</div>
 			<div>
 				<div class="small-font bold">
