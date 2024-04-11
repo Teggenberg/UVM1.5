@@ -10,6 +10,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace UVM1._5.Controllers
 {
@@ -277,7 +278,7 @@ namespace UVM1._5.Controllers
 
             Item item = GetItem(id);
 
-            
+            item.Condition.Name = Condition(item.Condition.Value);
 
             return View(item);
         }
@@ -459,6 +460,34 @@ namespace UVM1._5.Controllers
                 System.Diagnostics.Debug.WriteLine("\n\n\nplease work");
                 //System.IO.File.Delete(filename);
 
+            }
+
+        }
+
+        public string Condition(int? condition)
+        {
+            switch(condition)
+            {
+                case 0:
+                    {
+                        return "Poor";
+                    }
+                case 1:
+                    {
+                        return "Fair";
+                    }
+                case 2:
+                    {
+                        return "Good";
+                    }
+                case 3:
+                    {
+                        return "Great";
+                    }
+                default:
+                    {
+                        return "Excellent";
+                    }
             }
 
         }

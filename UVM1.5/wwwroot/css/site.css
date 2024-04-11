@@ -56,9 +56,14 @@ input::-webkit-inner-spin-button {
     font-size: .9rem;
 }
 
-.small-font-bold {
-    font-size: .9rem;
+.bold {
+    
     font-weight: 700;
+}
+
+#contact {
+    border: 1px solid #808080;
+    box-shadow: -2px 2px 5px #c4bdbd;
 }
 
 @media (max-width: 1000px) {
