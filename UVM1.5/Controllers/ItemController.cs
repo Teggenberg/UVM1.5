@@ -175,9 +175,9 @@ namespace UVM1._5.Controllers
 
             Item item = GetItem(id);
 
-            OpenAIController ai = new OpenAIController();
+            /*OpenAIController ai = new OpenAIController();
             string prompt = $" Does this photo show  a {item.Brand.Name} {item.Model} {item.Category.Name}. Please respond with yes or no.";
-            ai.CheckImage(prompt, "https://uvmprototype.com/Images/temp.jpg");
+            ai.CheckImage(prompt, "https://uvmprototype.com/Images/temp.jpg");*/
 
             return View(item);
         }

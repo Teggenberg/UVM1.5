@@ -152,9 +152,29 @@ input::-webkit-inner-spin-button {
 @media (max-width: 990px) {
 
     .item-info {
-        /*padding-left: 25px;*/
+        padding-right: 15px;
+        padding-left: 15px;
         border-left: none;
         border-top: 1px solid #c4bdbd;
+    }
+
+    #main-img {
+        /*width: 50%;*/
+        max-width: 60vw;
+        max-height: 70vh;
+    }
+
+    .arrow-btn {
+        
+        font-size: 1.4rem;
+    }
+
+    .btn-border {
+        padding: 0;
+        width: 36px;
+        height: 36px;
+        border: 1px solid black;
+        border-radius: 18px;
     }
    
 }
