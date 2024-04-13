@@ -1,7 +1,7 @@
 ﻿@model UVM1._5.Models.Item
 
 <div class="">
-	<did id="web-view" class="row d-inline-flex">
+	<div id="web-view" class="row d-inline-flex">
 		<div class="col col-xl-8">
 
 			<div id="photo-view">
@@ -13,7 +13,15 @@
 							
 						</button>
 
+					@if(Model.Images[0] != null)
+					{
 						<img id="main-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" onclick="enlarge(this);" />
+					}
+					else
+					{
+						<img id="main-img" src="~/images/no_images.png" onclick="enlarge(this);" />
+					}
+					
 
 						<button class="btn arrow-btn right-arrow" onclick="return scrollleft()">
 							
@@ -25,7 +33,17 @@
 				
 			</div>
 			<div class="d-flex justify-content-center my-3">
-				<div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
+
+				@foreach(var img in Model.Images)
+				{
+					@if(img != null)
+					{
+						<div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
+							<img class="web-thumb" src="data:image;base64,@System.Convert.ToBase64String(img)" />
+						</div>
+					}
+				}
+				@* <div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
 					<img class="web-thumb" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" />
 				</div>
 				<div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
@@ -36,7 +54,7 @@
 				</div>
 				<div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
 					<img class="web-thumb" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3])" />
-				</div>
+				</div> *@
 				
 				
 				
@@ -75,11 +93,47 @@
 				<hr />
 			
 			</div>
-			<div class="small-font bold">
-				<p id="finance" >6-month special financing + $@((int)Model.Retail /20)</p> back in Rewards** Limited time
+			<div >
+				<p id="finance" >6-month special financing + $@((int)Model.Retail /20) back in Rewards** Limited time</p>
 				<hr />
 			</div>
+			<div class="small-font">
+				<p>Lease-To-Own Purchase Options <span style="text-decoration: underline"> Learn More</span></p>
+				<hr />
+			</div>
+			<input id="buy-btn" class="btn bold my-4" value="Add to Cart"/>
 
 		</div>
-	</did>
+		<div id="description" class="b-top">
+			<h3 class="bold mt-3">Description</h3>
+			<p>@Model.Description.</p>
+		</div>
+		<div id="details" class="b-top">
+			<h3 class="bold mt-3">Details</h3>
+			<p id="item-details">@Model.Details</p>
+
+		</div>
+	</div>
 </div>
+<script>
+
+	
+	document.addEventListener("DOMContentLoaded", function () {
+		var det = document.getElementById("item-details");
+		det.innerText = formatDetails(det.innerText);
+		console.log(det);
+	});
+	
+	
+
+	function formatDetails(text) {
+		var det = '';
+		var detailsArr = text.split(',');
+		console.log(detailsArr);
+		for (let i = 0; i < detailsArr.length; i++) {
+
+			det = det + '- ' + detailsArr[i] + '\n';
+		}
+		return det;
+	}
+</script>
