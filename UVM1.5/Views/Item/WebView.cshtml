@@ -1,11 +1,11 @@
 ﻿@model UVM1._5.Models.Item
 
 
-	<div id="web-view" class="row d-inline-flex">
-		<div class="col col-xl-8">
+	<div id="web-view" class="row">
+		<div class="col col-lg-8 d-lg-flex flex-column justify-content-center align-content-center">
 
 			<div id="photo-view">
-				<div id="" class="container d-flex justify-content-between mt-5 mb-1">
+				<div id="" class="img-box container d-flex justify-content-between align-items-center mt-5 mb-1">
 
 					
 						<button class="btn arrow-btn left-arrow" onclick="return scrollright()">
@@ -15,7 +15,7 @@
 
 					@if(Model.Images[0] != null)
 					{
-						<img id="main-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" onclick="enlarge(this);" />
+						<img id="main-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" ;" />
 					}
 					else
 					{
@@ -23,7 +23,7 @@
 					}
 					
 
-						<button class="btn arrow-btn right-arrow" onclick="return scrollleft()">
+						<button class="btn arrow-btn right-arrow" onclick="return scrollright()">
 							
 							<img src="~/images/rightArrow.png" class="btn-border"/>
 
@@ -32,37 +32,23 @@
 				</div>
 				
 			</div>
-			<div class="d-flex justify-content-center my-3">
+			<div class=" d-flex justify-content-center my-3">
 
 				@foreach(var img in Model.Images)
 				{
 					@if(img != null)
 					{
-						<div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
-							<img class="web-thumb" src="data:image;base64,@System.Convert.ToBase64String(img)" />
+						<div class="itm-img thumb-border mx-2 d-flex justify-content-center align-items-center">
+							<img class="web-thumb" onclick="return replaceImg(this)" src="data:image;base64,@System.Convert.ToBase64String(img)" />
 						</div>
 					}
 				}
-				@* <div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
-					<img class="web-thumb" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" />
-				</div>
-				<div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
-					<img class="web-thumb " src="data:image;base64,@System.Convert.ToBase64String(Model.Images[1])" />
-				</div>
-				<div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
-					<img class="web-thumb " src="data:image;base64,@System.Convert.ToBase64String(Model.Images[2])" />
-				</div>
-				<div class="thumb-border mx-2 d-flex justify-content-center align-items-center">
-					<img class="web-thumb" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3])" />
-				</div> *@
-				
-				
-				
+
 				
 			</div>
 
 		</div>
-		<div class="col col-xl-4 item-info pt-3">
+		<div class="col col-lg-4 item-info pt-3">
 			<h3 class="pb-0">@Model.Year @Model.Brand.Name @Model.Model @Model.Category.Name</h3>
 			<div class="d-flex small-font">
 				<div class="mr-3 pt-0">
@@ -117,6 +103,28 @@
 
 <script>
 
+	var mainImg = document.getElementById("main-img");
+
+	const imgs = document.querySelectorAll("itm-img");
+	let activeImg = 0;
+
+	function replaceImg(imgs) {
+		
+		mainImg.src = imgs.src;
+		return false;
+	}
+
+	function scrollright() {
+
+		// activeImg++;
+		// if (activeImg > imgs.length - 1) {
+		// 	activeImg = 0;
+		// }
+		
+		// mainImg.src = imgs[activeImg].children[activeImg].src;
+
+		// return false;
+	}
 	
 	document.addEventListener("DOMContentLoaded", function () {
 		var det = document.getElementById("item-details");

@@ -421,7 +421,7 @@ namespace UVM1._5.Controllers
             /*OpenAIController ai = new OpenAIController();
             ai.GPTVision();*/
 
-            TempFile(item.Images[0], "");
+            //TempFile(item.Images[0], "");
 
             return item;
         }
