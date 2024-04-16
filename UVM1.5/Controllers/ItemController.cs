@@ -283,8 +283,41 @@ namespace UVM1._5.Controllers
             return View(item);
         }
 
-        // GET: ItemController/Delete/5
-        public ActionResult Delete(int id)
+		public ActionResult PhotoList()
+		{
+			List<ListVM?> list = new List<ListVM?>();
+			string select = "select * from item\r\njoin Brands on Brand = Brands.Id\r\njoin Category on Category = Category.Id;";
+			DataTable items = DBQuery.SelectAll(select);
+
+			for (int i = 0; i < items.Rows.Count; i++)
+			{
+
+
+				ListVM item = new ListVM()
+				{
+					Id = Convert.ToInt32(items.Rows[i][0]),
+					Location = Convert.ToInt32(items.Rows[i][1]),
+					Brand = (string?)items.Rows[i][15],
+					Model = (string?)items.Rows[i][3],
+					Year = (string?)items.Rows[i][4],
+					Color = (string?)items.Rows[i][5],
+					Category = (string?)items.Rows[i][17],
+					Cost = (decimal?)items.Rows[i][10],
+					Retail = (decimal?)items.Rows[i][11],
+				};
+				item.DisplayIMG = DBQuery.GetImage(item.Id);
+                if(item.DisplayIMG != null)
+                {
+					list.Add(item);
+				}
+				
+
+			}
+			return View(list);
+		}
+
+		// GET: ItemController/Delete/5
+		public ActionResult Delete(int id)
         {
             return View();
         }

@@ -13,9 +13,9 @@
 							
 						</button> *@
 
-					@if(Model.Images[0] != null)
+					@if(Model.Images[0].Img != null)
 					{
-						<img id="main-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" ;" />
+						<img id="main-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0].Img)" ;" />
 					}
 					else
 					{
@@ -39,7 +39,7 @@
 					@if(img != null)
 					{
 						<div class="itm-img thumb-border mx-2 d-flex justify-content-center align-items-center">
-							<img class="web-thumb" onclick="return replaceImg(this)" src="data:image;base64,@System.Convert.ToBase64String(img)" />
+							<img class="web-thumb" onclick="return replaceImg(this)" src="data:image;base64,@System.Convert.ToBase64String(img.Img)" />
 						</div>
 					}
 				}

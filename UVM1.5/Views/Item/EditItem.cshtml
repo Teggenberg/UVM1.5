@@ -179,9 +179,9 @@
 
                         <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
                             <label class="form-label text-center">Image #1 </label>
-                            @if (Model.Images[0] != null)
+                            @if (Model.Images[0].Img != null)
                             {
-                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0])" />
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0].Img)" />
                                 
                             }
                             else
@@ -201,9 +201,9 @@
 
                         <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
                             <label class="form-label text-center">Image #2 </label>
-                            @if (Model.Images[1] != null)
+                            @if (Model.Images[1].Img != null)
                             {
-                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[1])" />
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[1].Img)" />
 
                             }
                             else
@@ -225,9 +225,9 @@
 
                         <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
                             <label class="form-label text-center">Image #3 </label>
-                            @if (Model.Images[2] != null)
+                            @if (Model.Images[2].Img != null)
                             {
-                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[2])" />
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[2].Img)" />
 
                             }
                             else
@@ -243,9 +243,9 @@
 
                         <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
                             <label class="form-label text-center">Image #4 </label>
-                            @if (Model.Images[3] != null)
+                            @if (Model.Images[3].Img != null)
                             {
-                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3])" />
+                                <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3].Img)" />
 
                             }
                             else
