@@ -392,6 +392,7 @@ namespace UVM1._5.Controllers
             string select = $"select * from item" +
                 $"\r\njoin Brands on Brand = Brands.Id" +
                 "\r\njoin Category on Category = Category.Id" +
+                "\r\njoin Locations on LocationID = Loc" +
                 $"\r\nwhere item.Id = {id};";
             DataTable items = DBQuery.SelectAll(select);
 
@@ -411,7 +412,8 @@ namespace UVM1._5.Controllers
                     Details = (string?)items.Rows[i][9],
                     Cost = (decimal?)items.Rows[i][10],
                     Retail = (decimal?)items.Rows[i][11],
-                    Serial = (string?)items.Rows[i][13]
+                    Serial = (string?)items.Rows[i][13],
+                    LocName = (string?)items.Rows[i][19],
                 };
 
                 item.Images = DBQuery.GetImages(item.Id);

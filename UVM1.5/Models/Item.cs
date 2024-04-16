@@ -18,6 +18,8 @@
         public string? Details { get; set; }
         public List<byte[]?>? Images { get; set; }
         public byte[] DisplayIMG { get; set; }
+
+        public string? LocName { get; set; }
     }
 
 

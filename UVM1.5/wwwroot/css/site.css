@@ -146,10 +146,14 @@ input::-webkit-inner-spin-button {
 
 @media (max-width: 1200px){
 
-    .img-box {
-        
-       /*width: 380px;*/
+    .img-box{
+        height: 70vh;
     }
+    
+    #photo-view{
+        height: 70vh;
+    }
+     
 
     #main-img {
         /*max-width: 360px;*/
@@ -157,8 +161,8 @@ input::-webkit-inner-spin-button {
 
     #main-img {
         /*width: 50%;*/
-        max-width: 40vw;
-        max-height: 70vh;
+        max-width: 60vw;
+        max-height: 60vh;
     }
 
 }

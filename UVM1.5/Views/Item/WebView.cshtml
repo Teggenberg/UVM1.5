@@ -1,17 +1,17 @@
 ﻿@model UVM1._5.Models.Item
 
 
-	<div id="web-view" class="row">
-		<div class="col col-lg-8 d-lg-flex flex-column justify-content-center align-content-center">
+	<div id="web-view" class="row justify-content-center">
+		<div class="col col-lg-8 d-flex flex-column justify-content-center align-items-center align-content-center">
 
 			<div id="photo-view">
-				<div id="" class="img-box container d-flex justify-content-between align-items-center mt-5 mb-1">
+				<div id="" class="img-box container d-flex justify-content-between align-items-center mt-5 mb-1 align-self-center">
 
 					
-						<button class="btn arrow-btn left-arrow" onclick="return scrollright()">
+						@* <button class="btn arrow-btn left-arrow" onclick="return scrollright()">
 							<img src="~/images/leftArrow.png" class="btn-border"/>
 							
-						</button>
+						</button> *@
 
 					@if(Model.Images[0] != null)
 					{
@@ -23,11 +23,11 @@
 					}
 					
 
-						<button class="btn arrow-btn right-arrow" onclick="return scrollright()">
+						@* <button class="btn arrow-btn right-arrow" onclick="return scrollright()">
 							
 							<img src="~/images/rightArrow.png" class="btn-border"/>
 
-						</button>
+						</button> *@
 
 				</div>
 				
@@ -48,7 +48,7 @@
 			</div>
 
 		</div>
-		<div class="col col-lg-4 item-info pt-3">
+		<div class="col-12 col-lg-4 item-info pt-3">
 			<h3 class="pb-0">@Model.Year @Model.Brand.Name @Model.Model @Model.Category.Name</h3>
 			<div class="d-flex small-font">
 				<div class="mr-3 pt-0">
@@ -61,7 +61,7 @@
 			<div id="contact" class="px-3 py-2 my-4">
 				<p class="bold">Contact or Visit Us for More Details </p>
 				<p class="">Every used item is unique—we can help ensure this gear is right for you</p>
-				<p>Item Location: <span style="color: red">@Model.Location</span></p>
+				<p>Item Location: <span style="color: red">@Model.LocName</span></p>
 				<div class="d-flex text-center mb-2">
 					<div class="contact-btn bold px-2 py-1 ">
 						(555) 555-5555
