@@ -341,7 +341,7 @@ namespace UVM1._5.Controllers
             i = 1;
             OpenAIController ai = new OpenAIController();
             string prompt = $"Does this image contain a {item.Category.Name} " +
-                $"or part of a {item.Category.Name}?";
+                $"or part of a {item.Category.Name}? Please respond with 'Yes' or 'No' only.";
             
             foreach (var img in item.Images)
             {
@@ -353,7 +353,14 @@ namespace UVM1._5.Controllers
                     {
                         DBQuery.FlagImage(item.Id, img.Position);
                     }
+
+                    string res = "Insert into AI_responses (Item, Response)" +
+                        $"\r\n values ({item.Id}, '{isValid}')";
+                    DBQuery.Insert(res);
+
                 }
+                i++;
+                
             }
 
 
