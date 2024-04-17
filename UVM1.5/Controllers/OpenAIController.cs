@@ -181,7 +181,7 @@ namespace UVM1._5.Controllers
 
         }
 
-        public async Task CheckImage(string imgUrl, string prompt)
+        public async Task<string?> CheckImage(string prompt, string imgUrl)
         {
             string endPoint = "https://api.openai.com/v1/chat/completions";
             HttpClient client = new HttpClient();
@@ -189,15 +189,7 @@ namespace UVM1._5.Controllers
 
             try
             {
-                /*client.BaseAddress = new Uri(endPoint);
 
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _key);
-
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-
-                client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-                
-*/
                 string json = JsonSerializer.Serialize(request);
                 var requestContent = new StringContent(json, Encoding.UTF8, "application/json");
                 client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_key}");
@@ -208,20 +200,30 @@ namespace UVM1._5.Controllers
                 vResponse = JsonSerializer.Deserialize<VisionResponse>(responseBody);
                 int i = 0;
 
-                string answer = vResponse.choices[0].message.content;
-
-
+                
+                try
+                {
+                    string? answer = vResponse.choices[0].message.content;
+                    return answer;
+                }
+                catch
+                {
+                    return "fail";
+                }
+                
+                
 
             }
             catch(Exception ex)
             {
                 var message = ex.Message;
                 var extest = "";
+                return "fail";
 
             }
             
 
-            var test = "";
+            
 
 
 

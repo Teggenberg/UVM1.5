@@ -316,6 +316,51 @@ namespace UVM1._5.Controllers
 			return View(list);
 		}
 
+        public ActionResult Validate(int id)
+        {
+            Item item = GetItem(id);
+
+            item.Condition.Name = Condition(item.Condition.Value);
+
+            return View(item);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ValidatePhotos(int id)
+        {
+            Item item = GetItem(id);
+            int i = 1;
+            foreach(var img in item.Images)
+            {
+                if(img.Img != null)
+                {
+                    TempFile(img.Img, $"temp{i}.jpg");
+                    i++;
+                }
+            }
+            i = 1;
+            OpenAIController ai = new OpenAIController();
+            string prompt = $"Does this image contain a {item.Category.Name} " +
+                $"or part of a {item.Category.Name}?";
+            
+            foreach (var img in item.Images)
+            {
+                if (img.Img != null)
+                {
+                    string url = $"https://uvmprototype.com/Images/temp{i}.jpg";
+                    string isValid = await ai.CheckImage(url, prompt);
+                    if (isValid[0] == 'N' || isValid[0] == 'n')
+                    {
+                        DBQuery.FlagImage(item.Id, img.Position);
+                    }
+                }
+            }
+
+
+            return View("Validate",item);
+
+        }
+
 		// GET: ItemController/Delete/5
 		public ActionResult Delete(int id)
         {
@@ -453,10 +498,6 @@ namespace UVM1._5.Controllers
 
             }
 
-            /*OpenAIController ai = new OpenAIController();
-            ai.GPTVision();*/
-
-            //TempFile(item.Images[0], "");
 
             return item;
         }
@@ -475,7 +516,7 @@ namespace UVM1._5.Controllers
 
         }
 
-        public void TempFile(byte[] img, string path)
+        public void TempFile(byte[] img, string filename)
         {
             if(img != null)
             {
@@ -483,17 +524,13 @@ namespace UVM1._5.Controllers
                 string extension = "jpg"; // "pdf", etc
 
 
-                //string filename = System.IO.Path.GetTempFileName() + "." + extension; // Makes something like "C:\Temp\blah.tmp.pdf"
-                string filename = "wwwroot/images/temp.jpg";
-                System.IO.File.WriteAllBytes(filename, filedata);
 
-                /*var process = Process.Start(filename);
-                // Clean up our temporary file...
-                process.Exited += (s, e) => System.IO.File.Delete(filename);*/
+                string path = $"wwwroot/images/{filename}";
+                System.IO.File.WriteAllBytes(path, filedata);
+
                 System.Diagnostics.Debug.WriteLine(filename);
-                //System.IO.File.Delete(filename);
-                System.Diagnostics.Debug.WriteLine("\n\n\nplease work");
-                //System.IO.File.Delete(filename);
+
+
 
             }
 

@@ -146,7 +146,8 @@ namespace UVM1._5.Controllers
                 if(dt.Rows[i][0] != null)
                 {
                     itemImages[Convert.ToInt32(dt.Rows[i][1])-1].Img = (byte[])dt.Rows[i][0];
-					itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1].Flag = (bool?)dt.Rows[i][2];
+                    itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1].Position = Convert.ToInt32(dt.Rows[i][1]);
+                    itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1].Flag = (bool?)dt.Rows[i][2];
 					itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1].Verified = (bool?)dt.Rows[i][3];
 
 				}
@@ -154,6 +155,16 @@ namespace UVM1._5.Controllers
             }
 
             return itemImages;
+        }
+
+        public static void FlagImage(int? id, int? position)
+        {
+            string flag = "Update Item_image" +
+                "\r\nSet flag = 1" +
+                $"\r\nWhere Item_Id = {id}" +
+                $"\r\nWhere Postition = {position}";
+            Insert(flag);
+
         }
 
         public static byte[]? GetImage(int? itemId)
