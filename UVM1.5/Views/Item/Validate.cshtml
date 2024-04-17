@@ -1,7 +1,7 @@
 ﻿@model UVM1._5.Models.Item
 
 
-<form asp-action="ValidatePhotos" enctype="multipart/form-data" AllowMultiple="true" runat="server"  class="row d-inline-flex col-12">
+<form asp-action="ValidatePhotos" enctype="multipart/form-data" AllowMultiple="true" runat="server"  class="row d-inline-flex col-12 justify-content-center">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="d-flex flex-column text-center">
@@ -12,29 +12,31 @@
                 <h4>@Model.Year @Model.Brand.Name @Model.Model @Model.Color</h4>
             </div>
 
-    <div id="" class="row d-lg-flex justify-content-lg-around ">
+    <div id="" class="row d-flex justify-content-center ">
 
-
+        
         @foreach(var img in Model.Images)
         {
             <div class="col-12 col-xxl-6 d-flex justify-content-center">
 
-                <div class="col-12 d-flex flex-column col-lg-6 align-items-center justify-content-center">
-                    <label class="form-label text-center">Image #1 </label>
+                <div class="col-12 d-flex flex-column col-lg-6 align-items-center align-content-center justify-content-center">
+                    
                     @if (img.Img != null)
                     {
-                        <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(img.Img)" />
+                        <label class="form-label text-center mt-5">Image @img.Position </label>
+                        <img class="col col-xxl-6 edit-img" src="data:image;base64,@System.Convert.ToBase64String(img.Img)" />
 
                     }
                     @if(img.Flag == true)
                     {
-                        <h4 class="text-center">Ai has flagged this image</h4>
+                        <h4 class="text-center mb-3" style="color: red;">Ai has flagged this image</h4>
+                    }
+                    @if(img.Verified == true)
+                    {
+                        <h4 class="text-center mb-3" style="color: green;">Ai has verified this image</h4>
                     }
 
-                    <div class="col-12 d-flex justify-content-center align-items-center">
-                        <label class="form-label mx-2">Update: </label>
-                        <input type="file" name="image1" class="my-1 ml-1 form-control" />
-                    </div>
+                    
 
                 </div>
 

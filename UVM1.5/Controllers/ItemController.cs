@@ -353,6 +353,10 @@ namespace UVM1._5.Controllers
                     {
                         DBQuery.FlagImage(item.Id, img.Position);
                     }
+                    else
+                    {
+                        DBQuery.VerifyImage(item.Id, img.Position); 
+                    }
                     isValid = CorrectPunctuation(isValid);
                     string res = "Insert into AI_responses (Item, Response)" +
                         $"\r\n values ({item.Id}, '{isValid}')";
@@ -362,6 +366,8 @@ namespace UVM1._5.Controllers
                 i++;
                 
             }
+
+            item = GetItem(id);
 
 
             return View("Validate",item);

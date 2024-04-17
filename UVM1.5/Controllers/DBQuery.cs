@@ -162,7 +162,17 @@ namespace UVM1._5.Controllers
             string flag = "Update Item_image" +
                 "\r\nSet flag = 1" +
                 $"\r\nWhere Item_Id = {id}" +
-                $"\r\nWhere Postition = {position}";
+                $"\r\nand Position = {position};";
+            Insert(flag);
+
+        }
+
+        public static void VerifyImage(int? id, int? position)
+        {
+            string flag = "Update Item_image" +
+                "\r\nSet verified = 1" +
+                $"\r\nWhere Item_Id = {id}" +
+                $"\r\nand Position = {position};";
             Insert(flag);
 
         }
