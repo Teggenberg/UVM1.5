@@ -147,8 +147,20 @@ namespace UVM1._5.Controllers
                 {
                     itemImages[Convert.ToInt32(dt.Rows[i][1])-1].Img = (byte[])dt.Rows[i][0];
                     itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1].Position = Convert.ToInt32(dt.Rows[i][1]);
-                    itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1].Flag = (bool?)dt.Rows[i][2];
-					itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1].Verified = (bool?)dt.Rows[i][3];
+                    try
+                    {
+                        itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1].Flag = (bool?)dt.Rows[i][2];
+                    }
+                    catch
+                    {
+
+                    }
+                    try
+                    {
+                        itemImages[Convert.ToInt32(dt.Rows[i][1]) - 1].Verified = (bool?)dt.Rows[i][3];
+                    }
+                    catch { }
+					
 
 				}
                 
@@ -160,7 +172,8 @@ namespace UVM1._5.Controllers
         public static void FlagImage(int? id, int? position)
         {
             string flag = "Update Item_image" +
-                "\r\nSet flag = 1" +
+                "\r\nSet flag = 1," +
+                "\r\nverified = 0" +
                 $"\r\nWhere Item_Id = {id}" +
                 $"\r\nand Position = {position};";
             Insert(flag);
@@ -170,7 +183,8 @@ namespace UVM1._5.Controllers
         public static void VerifyImage(int? id, int? position)
         {
             string flag = "Update Item_image" +
-                "\r\nSet verified = 1" +
+                "\r\nSet verified = 1," +
+                "\r\nflag = 0" +
                 $"\r\nWhere Item_Id = {id}" +
                 $"\r\nand Position = {position};";
             Insert(flag);

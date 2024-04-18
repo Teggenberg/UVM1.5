@@ -138,7 +138,10 @@ namespace UVM1._5.Controllers
         public ActionResult List()
         {
             List<ListVM?> list = new List<ListVM?>();
-            string select = "select * from item\r\njoin Brands on Brand = Brands.Id\r\njoin Category on Category = Category.Id;";
+            string select = "select * from item" +
+                "\r\njoin Brands on Brand = Brands.Id" +
+                "\r\njoin Category on Category = Category.Id" +
+                "Order by Created desc;";
             DataTable items = DBQuery.SelectAll(select);
 
             for(int i = 0; i < items.Rows.Count; i++)
@@ -243,7 +246,10 @@ namespace UVM1._5.Controllers
         public ActionResult WebList()
         {
             List<ListVM?> list = new List<ListVM?>();
-            string select = "select * from item\r\njoin Brands on Brand = Brands.Id\r\njoin Category on Category = Category.Id;";
+            string select = "select * from item" +
+                "\r\njoin Brands on Brand = Brands.Id" +
+                "\r\njoin Category on Category = Category.Id" +
+                "\r\nOrder by Created desc;";
             DataTable items = DBQuery.SelectAll(select);
 
             for (int i = 0; i < items.Rows.Count; i++)
@@ -286,7 +292,10 @@ namespace UVM1._5.Controllers
 		public ActionResult PhotoList()
 		{
 			List<ListVM?> list = new List<ListVM?>();
-			string select = "select * from item\r\njoin Brands on Brand = Brands.Id\r\njoin Category on Category = Category.Id;";
+			string select = "select * from item" +
+                "\r\njoin Brands on Brand = Brands.Id" +
+                "\r\njoin Category on Category = Category.Id" +
+                "\r\nOrder by Created desc;";
 			DataTable items = DBQuery.SelectAll(select);
 
 			for (int i = 0; i < items.Rows.Count; i++)

@@ -17,23 +17,23 @@
         
         @foreach(var img in Model.Images)
         {
-            <div class="col-12 col-xxl-6 d-flex justify-content-center">
+            <div class="col-12 col-xxl-6 d-flex justify-content-center my-4">
 
-                <div class="col-12 d-flex flex-column col-lg-6 align-items-center align-content-center justify-content-center">
+                <div class="my-1 col-12 d-flex flex-column col-lg-6 align-items-center">
                     
                     @if (img.Img != null)
                     {
-                        <label class="form-label text-center mt-5">Image @img.Position </label>
-                        <img class="col col-xxl-6 edit-img" src="data:image;base64,@System.Convert.ToBase64String(img.Img)" />
+                        <label class="form-label text-center ">Image @img.Position </label>
+                        <img class=" edit-img" src="data:image;base64,@System.Convert.ToBase64String(img.Img)" />
 
                     }
                     @if(img.Flag == true)
                     {
-                        <h4 class="text-center mb-3" style="color: red;">Ai has flagged this image</h4>
+                        <h4 class="text-center " style="color: red;">Ai has flagged this image</h4>
                     }
                     @if(img.Verified == true)
                     {
-                        <h4 class="text-center mb-3" style="color: green;">Ai has verified this image</h4>
+                        <h4 class="text-center " style="color: green;">Ai has verified this image</h4>
                     }
 
                     
