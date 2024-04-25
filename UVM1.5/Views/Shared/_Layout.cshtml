@@ -37,6 +37,7 @@
     </style>
 </head>
 <body>
+    
     <header style="background-color: darkred;" class="my-0 py-0">
         <nav   class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow nav-uvm py-0">
             <div id="nav-uvm" class="container-fluid">
@@ -55,26 +56,29 @@
                             <a class="nav-link text-light mx-2" asp-area="" asp-controller="Item" asp-action="Create">New Item</a>
                         </li>
                         <li class="nav-item bold">
-                            <a class="nav-link text-light mx-2" asp-area="" asp-controller="Item" asp-action="List">Edit Listings</a>
+                            <a class="nav-link text-light mx-2" asp-area="" asp-controller="Item" asp-action="List" onclick="load()">Edit Listings</a>
                         </li>
                         <li class="nav-item bold">
-                            <a class="nav-link text-light mx-2" asp-area="" asp-controller="Item" asp-action="WebList">Website Preview</a>
+                            <a class="nav-link text-light mx-2" asp-area="" asp-controller="Item" asp-action="WebList" onclick="load()">Website Preview</a>
                         </li>
                         <li class="nav-item bold">
-                            <a class="nav-link text-light mx-2" asp-area="" asp-controller="Item" asp-action="PhotoList">Ai Photo-Validation</a>
+                            <a class="nav-link text-light mx-2" asp-area="" asp-controller="Item" asp-action="PhotoList" onclick="load()">Ai Photo-Validation</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div id="loadcontainer">
+        <div id="loader"></div>
+    </div>
+    <div id="content" class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
         <div class="container">
             
         </div>
@@ -85,3 +89,21 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    noload();
+
+    function noload() {
+        loader.style.display = "none";
+        document.getElementById("loadcontainer").style.display = "none";
+        document.getElementById("content").style.display = "block";
+    }
+
+    function load() {
+        loader.style.display = "block";
+        document.getElementById("loadcontainer").style.display = "block";
+        document.getElementById("content").style.display = "none";
+        //document.getElementById("updateInfo").disabled = true;
+        return true;
+    };
+</script>
