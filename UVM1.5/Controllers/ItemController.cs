@@ -141,7 +141,7 @@ namespace UVM1._5.Controllers
             string select = "select * from item" +
                 "\r\njoin Brands on Brand = Brands.Id" +
                 "\r\njoin Category on Category = Category.Id" +
-                "Order by Created desc;";
+                "\r\nOrder by Created desc;";
             DataTable items = DBQuery.SelectAll(select);
 
             for(int i = 0; i < items.Rows.Count; i++)

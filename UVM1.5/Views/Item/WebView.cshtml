@@ -36,7 +36,7 @@
 
 				@foreach(var img in Model.Images)
 				{
-					@if(img != null)
+					@if(img.Img != null)
 					{
 						<div class="itm-img thumb-border mx-2 d-flex justify-content-center align-items-center">
 							<img class="web-thumb" onclick="return replaceImg(this)" src="data:image;base64,@System.Convert.ToBase64String(img.Img)" />

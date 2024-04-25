@@ -1,5 +1,7 @@
 ﻿@model UVM1._5.Models.Item
 
+<div id="loader"></div>
+
 
 <form asp-action="ValidatePhotos" enctype="multipart/form-data" AllowMultiple="true" runat="server"  class="row d-inline-flex col-12 justify-content-center">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -43,106 +45,17 @@
 
             </div>
 
-            
-
-
 
         }
 
-        @* <div class="my-2 d-lg-flex ">
-
-
-            <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
-                <label class="form-label text-center">Image #1 </label>
-                @if (Model.Images[0].Img != null)
-                {
-                    <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[0].Img)" />
-
-                }
-                else
-                {
-                    <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
-                }
-                <div class="col-8 d-flex justify-content-center align-items-center">
-                    <label class="form-label mx-2">Update: </label>
-                    <input type="file" name="image1" class="my-1 ml-1 form-control" />
-                </div>
-
-            </div>
-
-
-
-
-
-            <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
-                <label class="form-label text-center">Image #2 </label>
-                @if (Model.Images[1].Img != null)
-                {
-                    <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[1].Img)" />
-
-                }
-                else
-                {
-                    <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
-                }
-                <div class="col-8 d-flex justify-content-center align-items-center">
-                    <label class="form-label mx-2">Update: </label>
-                    <input type="file" name="image2" class="my-1 ml-1 form-control" />
-                </div>
-
-            </div>
-
-
-
-        </div>
-
-        <div class="d-lg-flex my-2">
-
-            <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
-                <label class="form-label text-center">Image #3 </label>
-                @if (Model.Images[2].Img != null)
-                {
-                    <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[2].Img)" />
-
-                }
-                else
-                {
-                    <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
-                }
-                <div class="col-8 d-flex justify-content-center align-items-center">
-                    <label class="form-label mx-2">Update: </label>
-                    <input type="file" name="image3" class="my-1 ml-1 form-control" />
-                </div>
-
-            </div>
-
-            <div class="col d-flex flex-column col-lg-6 align-items-center justify-content-center">
-                <label class="form-label text-center">Image #4 </label>
-                @if (Model.Images[3].Img != null)
-                {
-                    <img class="edit-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Images[3].Img)" />
-
-                }
-                else
-                {
-                    <img src="~/images/no_images.png" class="img-thumbnail" runat="server" />
-                }
-                <div class="col-8 d-flex justify-content-center align-items-center">
-                    <label class="form-label mx-2">Update: </label>
-                    <input type="file" name="last" class="my-1 ml-1 form-control" />
-                </div>
-
-            </div>
-
-
-        </div> *@
+       
 
 
 
         <div class=" col my-5 d-flex justify-content-center">
 
             <div class="form-group mt-2 col-6">
-                <input type="submit" value="Validate Photos" class="btn btn-danger col-12" onclick="return formComplete()" />
+                <input id="validate" type="submit" value="Validate Photos" class="btn btn-danger col-12" onclick="load()" />
             </div>
 
         </div>
@@ -157,10 +70,22 @@
 <script>
 
     var photos = document.getElementById("item-photos");
+    var loader = document.getElementById("loader");
+    noload();
 
     document.addEventListener("DOMContentLoaded", function () {
-        photos.style.display = block;
+        photos.style.display = "block";
+        loader.style.display = "none";
     });
+
+    function noload(){
+        loader.style.display = "none";
+    }
+
+    function load(){
+        loader.style.display = "block";
+        //document.getElementById("validate").disabled = true;
+    };
     
 </script>
 

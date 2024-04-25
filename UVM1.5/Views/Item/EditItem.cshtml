@@ -32,7 +32,7 @@
 
 
 </datalist>
-
+<div id="loader"></div>
 <div class="">
     <div>
         <form asp-action="UploadPhotos" enctype="multipart/form-data" AllowMultiple="true" runat="server"  class="row d-inline-flex col-12">
@@ -162,7 +162,7 @@
                     <div class=" col my-5 d-flex justify-content-center">
 
                         <div class="form-group mt-2 col-6">
-                            <input  value="Update Info" class="btn btn-danger col-12" onclick="return updateItemInfo()" />
+                            <input id="updateInfo"  value="Update Info" class="btn btn-danger col-12" onclick="return updateItemInfo()" />
                         </div>
 
                     </div>
@@ -267,7 +267,7 @@
                     <div class=" col my-5 d-flex justify-content-center">
 
                         <div class="form-group mt-2 col-6">
-                            <input type="submit" value="Update Photos" class="btn btn-danger col-12" onclick="return formComplete()" />
+                            <input id="updatePhotos" type="submit" value="Update Photos" class="btn btn-danger col-12" onclick="return load()" />
                         </div>
 
                     </div>
@@ -317,6 +317,19 @@
 
     var retail = document.getElementById("retail");
 
+    noload();
+
+    function noload() {
+        loader.style.display = "none";
+    }
+
+    function load() {
+        loader.style.display = "block";
+        //document.getElementById("updatePhotos").disabled = true;
+        //document.getElementById("updateInfo").disabled = true;
+        return true;
+    };
+
     function formComplete() {
         
 
@@ -336,6 +349,7 @@
             alert("Please enter a retail amount.")
             return false;
         }
+        
 
 
         return true;
@@ -346,7 +360,7 @@
         if (!formComplete()) {
             return false;
         }
-
+        load();
         var _id = id.value;
         var _brand = brand.value;
         var _model = model.value;
@@ -395,6 +409,8 @@
         });
 
         alert("Item Info has been updated")
+
+        noload();
 
         return false;
 
