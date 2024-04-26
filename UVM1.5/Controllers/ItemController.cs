@@ -102,7 +102,9 @@ namespace UVM1._5.Controllers
             int image_id = AddItem(item);
             AddImageRows(image_id);
 
-            return View("../Home/index");
+            
+
+            return View("../Home/Success");
         }
 
         [HttpGet]

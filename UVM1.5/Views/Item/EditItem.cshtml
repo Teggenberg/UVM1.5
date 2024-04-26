@@ -33,7 +33,9 @@
 
 </datalist>
 <div id="loader"></div>
+
 <div class="">
+    
     <div>
         <form asp-action="UploadPhotos" enctype="multipart/form-data" AllowMultiple="true" runat="server"  class="row d-inline-flex col-12">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -317,10 +319,13 @@
 
     var retail = document.getElementById("retail");
 
+    var loader = document.getElementById("loader");
+
     noload();
 
     function noload() {
         loader.style.display = "none";
+        document.getElementById("loadcontainer").style.display = "none";
     }
 
     function load() {

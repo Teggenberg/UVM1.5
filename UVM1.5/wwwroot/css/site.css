@@ -205,6 +205,26 @@ input::-webkit-inner-spin-button {
     }
    
 }
+.verified {
+    background-color: #04bb83;
+    color: white;
+    border-radius: 25px;
+}
+
+.flag {
+    background-color:#f25133;
+    color: white;
+    border-radius: 25px;
+}
+
+#banner {
+    height: 80px;
+}
+
+#instruction {
+    border: 2px solid black;
+    border-radius: 20px;
+}
 
 #loadcontainer{
     width: 100vw;
