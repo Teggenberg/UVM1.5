@@ -1,16 +1,21 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<div class="d-flex flex-column justify-content-center mt-4">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Create Listings for Used Musical Instruments leveraging the power of AI.</p>
-    <p>A creation by Tim Eggenberger</p>
-    <div>
-        
-        <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Create" >
-            <input value="Try it!" type="button" class="btn btn-danger col-4 my-5" />
-        </a>
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Create Listings for Used Musical Instruments leveraging the power of AI.</p>
+        <p>A creation by Tim Eggenberger</p>
+        <iframe id="youtube" src="https://www.youtube.com/embed/cR0xi6NV30Q?si=3UI5JnqvJUgvmMBt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div>
+
+            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Create">
+                <input value="Start Here" type="button" class="btn btn-danger col-4 my-1" />
+            </a>
+        </div>
+
     </div>
-    
+
 </div>
+
